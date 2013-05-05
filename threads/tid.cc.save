@@ -1,0 +1,54 @@
+/*----------------------------
+ *tid.cc
+ *created by Ju Yingnan, Lab 1
+ *2012-3-17
+ ------------------------------*/
+#include "tid.h"
+
+static int last_tid=-1;
+static Bitmap *_tidmap=new BitMap(TID_MAX_DEFAULT);
+
+void free_tidmap(int tid)
+{
+    //to do
+}
+
+int alloc_tidmap()
+{
+    int current_tid=last_tid+1;
+
+    if(current_tid>=TID_MAX_DEFAULT)
+    {
+        printf("tid is %d, out of range\n",current_tid);
+        return -1;
+    }
+
+    BitMap *tidmap =_tidmap;
+    if(!tidmap->NumClear()) //no more clear bits
+    {
+        printf("No more clear bits!\n");
+        return -1;
+    }
+
+    int _return = find_next_zero_bit(tid);
+
+    return _return;
+}
+
+void clear_bit(int tid) {
+    _tidmap->Clear(tid);
+}
+
+int find_next_zero_bit(int tid)
+{
+    BitMap *tidmap=_tidmap;
+    if(!tidmap->NumClear())
+    {
+        return -1;
+    }
+    
+    for(int i=tid,j=0;i%TID_MAX_DEFAULT<TID_MAX_DEFAULT && j<TID_MAX_DEFAULT;i++)
+    {
+        if()
+    }
+}
