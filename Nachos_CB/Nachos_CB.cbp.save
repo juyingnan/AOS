@@ -472,6 +472,9 @@
 		<Unit filename="../test/Makefile">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="../test/create.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../test/halt">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
@@ -536,6 +539,9 @@
 		</Unit>
 		<Unit filename="../test/start.s">
 			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
+		<Unit filename="../test/write.c">
+			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../threads/Makefile">
 			<Option target="&lt;{~None~}&gt;" />

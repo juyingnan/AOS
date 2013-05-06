@@ -64,8 +64,6 @@ static void SysCallJoinHandler();
 static void SysCallForkHandler();
 static void SysCallYieldHandler();
 
-static void ExceptionPageFaultHanlder();
-
 void
 ExceptionHandler(ExceptionType which)
 {
@@ -95,7 +93,7 @@ ExceptionHandler(ExceptionType which)
                     break;
 
                 case SC_Open:
-                    SysCallOpenHandler();
+                    SysCallOpenandler();
                     break;
 
                 case SC_Close:
@@ -156,8 +154,8 @@ HALT
 ******************************/
 static void SysCallHaltHandler()
 {
-    DEBUG('a', "Shutdown, initiated by user program.\n");
-    interrupt->Halt();
+	DEBUG('a', "Shutdown, initiated by user program.\n");
+	interrupt->Halt();
 }
 
 /******************************
@@ -165,158 +163,35 @@ CREATE
 ******************************/
 static void SysCallCreateHandler()
 {
-    DEBUG('a', "Create a new file.\n");
-    int baseAddr = machine->ReadRegister(4);
-    int value = -1;
-    char *name;
+	DEBUG('a', "Create a new file.\n");
+            int baseAddr = machine->ReadRegister(4);
+            int value = -1;
+            char *name;
 
-    int size = 0;
-    while(value != 0)
-    {
-        machine->ReadMem(baseAddr + size, 1, &value);
-        size++;
-    }
-    name = new char[size];
-    name[--size] = '\0';
-    int counter = 0;
-    while(size--)
-    {
-        machine->ReadMem(baseAddr++, 1, &value);
-        name[counter++] = (char)value;
-    }
-    printf("Exception: First arg is %s. Arg's length is %d\n", name, counter + 1);
-    if(!fileSystem->Create(name, DT_NORMAL))
-    {
-        printf("Exception: Create file failed.\n");
-    }
-    else
-    {
-        printf("File %s created successful.\n", name);
-    }
-    delete name;
-}
-
-/******************************
-OPEN
-******************************/
-static void SysCallOpenHandler()
-{
-    DEBUG('a', "Open a file. Return 0 if failed.\n");
-    int baseAddr = machine->ReadRegister(4);
-    int value = -1;
-    char *name;
-
-    int size = 0;
-    while(value != 0)
-    {
-        machine->ReadMem(baseAddr + size, 1, &value);
-        size++;
-    }
-    name = new char[size];
-    name[--size] = '\0';
-    int counter = 0;
-    while(size--)
-    {
-        machine->ReadMem(baseAddr++, 1, &value);
-        name[counter++] = (char)value;
-    }
-    OpenFile* file = fileSystem->Open(name);
-    //			OpenFileId fd = (int)file;
-    OpenFileId fd = file->GetFileDescriptor();
-#ifdef FILESYS_STUB
-#else//FILESYS
-    fileSystem->AddToTable(fd, file);
-#endif
-    machine->WriteRegister(2, fd);
-    delete name;
-}
-
-/******************************
-CLOSE
-******************************/
-static void SysCallCloseHandler()
-{
-    DEBUG('a', "Close a file specified by id.\n");
-    int fd = machine->ReadRegister(4);
-
-#ifdef FILESYS_STUB
-    OpenFile* file = new OpenFile(fd);
-    //			OpenFile* file = fileSystem->GetFromTable(fd);
-    delete file;
-#else//FILESYS
-    OpenFile* file = fileSystem->GetFromTable(fd);
-    delete file;
-    fileSystem->RemoveFromTable(fd);
-#endif
-}
-
-/******************************
-WRITE
-******************************/
-static void SysCallWriteHandler()
-{
-    DEBUG('a', "Write file.\n");
-    int fd = machine->ReadRegister(6);
-    int size = machine->ReadRegister(5);
-    int baseAddr = machine->ReadRegister(4);
-    char* buffer = new char[size];
-    //			int value = -1;
-    int i = 0;
-    while(i < size)
-    {
-        machine->ReadMem(baseAddr + i, 1, (int *)&buffer[i]);
-        i++;
-    }
-#ifdef FILESYS_STUB
-    OpenFile* file = new OpenFile(fd);
-#else//FILESYS
-    OpenFile* file = fileSystem->GetFromTable(fd);
-#endif
-    int realSize = file->Write(buffer, size);
-    if(realSize != size)
-    {
-        printf("Exception: Only wrote %d bytes of size.\n", realSize, size);
-    }
-    else
-    {
-        printf("Exception: Write %d bytes successfully\n", realSize);
-    }
-    delete buffer;
-}
-
-/******************************
-READ
-******************************/
-static void SysCallReadHandler()
-{
-    DEBUG('a', "Read a file.\n");
-    int fd = machine->ReadRegister(6);
-    int size = machine->ReadRegister(5);
-    int baseAddr = machine->ReadRegister(4);
-    char* buffer = new char[size];
-#ifdef FILESYS_STUB
-    OpenFile* file = new OpenFile(fd);
-#else//FILESYS
-    OpenFile* file = fileSystem->GetFromTable(fd);
-#endif
-    //			file->Seek(0);
-    int realSize = file->Read(buffer, size);
-    int i = 0;
-    while(i < size)
-    {
-        machine->WriteMem(baseAddr + i, 1, (int)buffer);
-        i++;
-    }
-    if(realSize != size)
-    {
-        printf("Exception: Only wrote %d bytes of size.\n", realSize, size);
-    }
-    else
-    {
-        machine->WriteRegister(2, realSize);
-        printf("Exception: Read %d bytes successfully\n", realSize);
-    }
-    delete buffer;
+            int size = 0;
+            while(value != 0)
+            {
+                machine->ReadMem(baseAddr + size, 1, &value);
+                size++;
+            }
+            name = new char[size];
+            name[--size] = '\0';
+            int counter = 0;
+            while(size--)
+            {
+                machine->ReadMem(baseAddr++, 1, &value);
+                name[counter++] = (char)value;
+            }
+            printf("Exception: First arg is %s. Arg's length is %d\n", name, counter + 1);
+            if(!fileSystem->Create(name, DT_NORMAL))
+            {
+                printf("Exception: Create file failed.\n");
+            }
+            else
+            {
+                printf("File %s created successful.\n", name);
+            }
+            delete name;
 }
 
 /******************************
@@ -324,6 +199,31 @@ EXEC
 ******************************/
 static void SysCallExecHandler()
 {
+	char fileName[100];
+	int arg = machine->ReadRegister(4);
+	int i = 0;
+	do
+	{
+		machine->ReadMem(arg + i, 1, (int*)&fileName[i]);
+	}while(fileName[i++] != '\0');
+
+	OpenFile* executable = fileSystem->Open(fileName);
+	if (executable != NULL)
+	{
+		Thread* thread = threadManager->createThread(fileName);
+		thread->space = memoryManager->createAddrSpace(thread->getThreadID(), executable);
+		machine->WriteRegister(2, thread->getThreadID());
+
+		DEBUG('a', "Exec from thread %d -> executable %s\n",
+				currentThread->getThreadID(), fileName);
+		thread->Fork(ThreadFuncForUserProg, 1);
+	}
+	else
+	{
+		machine->WriteRegister(2, -1);
+	}
+
+	machine->PCForward();
 }
 
 /******************************
@@ -331,6 +231,11 @@ EXIT
 ******************************/
 static void SysCallExitHandler()
 {
+	int threadId = currentThread->getThreadID();
+	memoryManager->deleteAddrSpace(threadId);
+	currentThread->Finish();
+
+	machine->PCForward();
 }
 
 /******************************
@@ -341,19 +246,40 @@ static void SysCallJoinHandler()
 }
 
 /******************************
-FORK
+C
 ******************************/
 static void SysCallForkHandler()
 {
+	Thread* thread = threadManager->createThread("UserProg");
+	thread->space = memoryManager->shareAddrSpace(currentThread->getThreadID(),
+												  thread->getThreadID());
+	int userFunc = machine->ReadRegister(4);
+	thread->SetUserRegister(PCReg, userFunc);
+	thread->SetUserRegister(NextPCReg, userFunc + 4);
+	thread->SetUserRegister(StackReg, machine->ReadRegister(StackReg) - 4);
+
+	DEBUG('a', "Fork from thread %d -> thread %d\n",
+			currentThread->getThreadID(),
+			thread->getThreadID());
+
+	thread->Fork(ThreadFuncForUserProg, 0);
+
+	machine->PCForward();
 }
 
-/******************************
-YEILD
-******************************/
 static void SysCallYieldHandler()
 {
+	currentThread->Yield();
+
+	machine->PCForward();
 }
 
 static void ExceptionPageFaultHanlder()
 {
+	if (machine->tlb != NULL)
+	{
+		int addr = machine->ReadRegister(BadVAddrReg);
+		machine->SwappingTLB(addr);
+		stats->numPageFaults++;
+	}
 }

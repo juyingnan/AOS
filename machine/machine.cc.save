@@ -111,7 +111,7 @@ Machine::RaiseException(ExceptionType which, int badVAddr)
     //2013-5-6
 	registers[PrevPCReg] = registers[PCReg];
 	registers[PCReg] += sizeof(int);
-	registers[NextPCReg] += sizeof(int);
+	registers[NextPCReg] += registers[PCReg] + sizeof(int);
 
     ExceptionHandler(which);		// interrupts are enabled at this point
     interrupt->setStatus(UserMode);
