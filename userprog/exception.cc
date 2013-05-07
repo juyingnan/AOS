@@ -158,6 +158,7 @@ static void SysCallHaltHandler()
 {
     DEBUG('a', "Shutdown, initiated by user program.\n");
     interrupt->Halt();
+    machine->PCForward();
 }
 
 /******************************
@@ -194,6 +195,7 @@ static void SysCallCreateHandler()
         printf("File %s created successful.\n", name);
     }
     delete name;
+    machine->PCForward();
 }
 
 /******************************
@@ -229,6 +231,7 @@ static void SysCallOpenHandler()
 #endif
     machine->WriteRegister(2, fd);
     delete name;
+    machine->PCForward();
 }
 
 /******************************
@@ -248,6 +251,7 @@ static void SysCallCloseHandler()
     delete file;
     fileSystem->RemoveFromTable(fd);
 #endif
+    machine->PCForward();
 }
 
 /******************************
@@ -282,6 +286,7 @@ static void SysCallWriteHandler()
         printf("Exception: Write %d bytes successfully\n", realSize);
     }
     delete buffer;
+    machine->PCForward();
 }
 
 /******************************
@@ -317,6 +322,7 @@ static void SysCallReadHandler()
         printf("Exception: Read %d bytes successfully\n", realSize);
     }
     delete buffer;
+    machine->PCForward();
 }
 
 /******************************
@@ -324,6 +330,38 @@ EXEC
 ******************************/
 static void SysCallExecHandler()
 {
+    int nameaddr = machine->ReadRegister(4);
+    int value = -1, size = 0;
+    while(value != 0)
+    {
+        machine->ReadMem(nameaddr + size, 1, &value);
+        size++;
+    }
+    char *name = new char[size];
+    name[--size] = '\0';
+    int counter = 0;
+    while(size--)
+    {
+        machine->ReadMem(nameaddr++, 1, &value);
+        name[counter++] = (char) value;
+    }
+    OpenFile *executable = fileSystem->Open(name);
+    AddrSpace *space;
+
+    if(executable == NULL)
+    {
+        printf("Unable to open file %s\n", name);
+        return;
+    }
+    space = new AddrSpace(executable);
+    currentThread->space = space;
+    delete executable; // close file
+    machine->WriteRegister(2, (int) space);
+
+    currentThread->space->InitRegisters(); // set the initial register values
+    currentThread->space->RestoreState(); // load page table register
+    machine->Run();
+    machine->PCForward();
 }
 
 /******************************
@@ -331,6 +369,10 @@ EXIT
 ******************************/
 static void SysCallExitHandler()
 {
+    printf("End User Program.\n");
+    printf("Page faults is %d\n", stats->numPageFaults);
+    currentThread->Finish();
+    machine->PCForward();
 }
 
 /******************************
@@ -352,6 +394,8 @@ YEILD
 ******************************/
 static void SysCallYieldHandler()
 {
+    currentThread->Yield();
+    machine->PCForward();
 }
 
 static void ExceptionPageFaultHanlder()

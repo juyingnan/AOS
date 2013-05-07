@@ -475,6 +475,9 @@
 		<Unit filename="../test/create.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../test/exe.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../test/halt">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
