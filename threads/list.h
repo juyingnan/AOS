@@ -63,6 +63,7 @@ public:
     // Routines to put/get items on/off list in order (sorted by key)
     void SortedInsert(void *item, int sortKey);	// Put item into list
     void *SortedRemove(int *keyPtr); 	  	// Remove first item from list
+    void* RemoveBySortedKey(int sortedKey);
 
     //Added by Ju Yingnan
     //2013-3-19

@@ -45,12 +45,15 @@ main.o: ../threads/main.cc ../threads/copyright.h ../threads/utility.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
  /usr/include/xlocale.h ../threads/system.h ../threads/thread.h \
- ../machine/machine.h ../threads/utility.h ../machine/translate.h \
- ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
- ../filesys/openfile.h ../threads/tid.h ../userprog/bitmap.h \
+ ../machine/machine.h ../threads/utility.h ../machine/TLBManager.h \
+ ../machine/translate.h ../vm/SwappingStrategy.h ../machine/disk.h \
+ ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../machine/translate.h ../threads/tid.h ../userprog/bitmap.h \
  ../filesys/openfile.h ../threads/scheduler.h ../threads/list.h \
- ../machine/timer.h ../machine/interrupt.h ../threads/list.h \
- ../machine/stats.h
+ ../machine/timer.h ../threads/threadmanager.h ../machine/interrupt.h \
+ ../threads/list.h ../machine/stats.h ../vm/MemoryManager.h \
+ ../vm/VirtMemManager.h ../vm/PhyMemManager.h ../vm/SwappingStrategy.h \
+ ../vm/SwappingManager.h
 list.o: ../threads/list.cc ../threads/copyright.h ../threads/list.h \
  ../threads/utility.h ../threads/bool.h ../machine/sysdep.h \
  ../threads/copyright.h /usr/include/stdio.h /usr/include/features.h \
@@ -82,11 +85,14 @@ scheduler.o: ../threads/scheduler.cc ../threads/copyright.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
  /usr/include/xlocale.h ../threads/thread.h ../machine/machine.h \
- ../threads/utility.h ../machine/translate.h ../machine/disk.h \
- ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../threads/utility.h ../machine/TLBManager.h ../machine/translate.h \
+ ../vm/SwappingStrategy.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
  ../threads/tid.h ../userprog/bitmap.h ../filesys/openfile.h \
- ../machine/timer.h ../threads/system.h ../machine/interrupt.h \
- ../threads/list.h ../machine/stats.h
+ ../machine/timer.h ../threads/system.h ../threads/threadmanager.h \
+ ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
+ ../vm/MemoryManager.h ../vm/VirtMemManager.h ../vm/PhyMemManager.h \
+ ../vm/SwappingStrategy.h ../vm/SwappingManager.h
 synch.o: ../threads/synch.cc ../threads/copyright.h ../threads/synch.h \
  ../threads/thread.h ../threads/utility.h ../threads/bool.h \
  ../machine/sysdep.h ../threads/copyright.h /usr/include/stdio.h \
@@ -103,11 +109,14 @@ synch.o: ../threads/synch.cc ../threads/copyright.h ../threads/synch.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
  /usr/include/xlocale.h ../machine/machine.h ../threads/utility.h \
- ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
- ../filesys/filesys.h ../filesys/openfile.h ../threads/tid.h \
+ ../machine/TLBManager.h ../machine/translate.h ../vm/SwappingStrategy.h \
+ ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
+ ../filesys/openfile.h ../machine/translate.h ../threads/tid.h \
  ../userprog/bitmap.h ../filesys/openfile.h ../threads/list.h \
  ../threads/system.h ../threads/scheduler.h ../machine/timer.h \
- ../machine/interrupt.h ../threads/list.h ../machine/stats.h
+ ../threads/threadmanager.h ../machine/interrupt.h ../threads/list.h \
+ ../machine/stats.h ../vm/MemoryManager.h ../vm/VirtMemManager.h \
+ ../vm/PhyMemManager.h ../vm/SwappingStrategy.h ../vm/SwappingManager.h
 synchlist.o: ../threads/synchlist.cc ../threads/copyright.h \
  ../threads/synchlist.h ../threads/list.h ../threads/utility.h \
  ../threads/bool.h ../machine/sysdep.h ../threads/copyright.h \
@@ -124,9 +133,10 @@ synchlist.o: ../threads/synchlist.cc ../threads/copyright.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
  /usr/include/xlocale.h ../threads/synch.h ../threads/thread.h \
- ../machine/machine.h ../threads/utility.h ../machine/translate.h \
- ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
- ../filesys/openfile.h ../threads/tid.h ../userprog/bitmap.h \
+ ../machine/machine.h ../threads/utility.h ../machine/TLBManager.h \
+ ../machine/translate.h ../vm/SwappingStrategy.h ../machine/disk.h \
+ ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../machine/translate.h ../threads/tid.h ../userprog/bitmap.h \
  ../filesys/openfile.h
 system.o: ../threads/system.cc ../threads/copyright.h ../threads/system.h \
  ../threads/utility.h ../threads/bool.h ../machine/sysdep.h \
@@ -143,11 +153,14 @@ system.o: ../threads/system.cc ../threads/copyright.h ../threads/system.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
  /usr/include/xlocale.h ../threads/thread.h ../machine/machine.h \
- ../threads/utility.h ../machine/translate.h ../machine/disk.h \
- ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../threads/utility.h ../machine/TLBManager.h ../machine/translate.h \
+ ../vm/SwappingStrategy.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
  ../threads/tid.h ../userprog/bitmap.h ../filesys/openfile.h \
  ../threads/scheduler.h ../threads/list.h ../machine/timer.h \
- ../machine/interrupt.h ../threads/list.h ../machine/stats.h
+ ../threads/threadmanager.h ../machine/interrupt.h ../threads/list.h \
+ ../machine/stats.h ../vm/MemoryManager.h ../vm/VirtMemManager.h \
+ ../vm/PhyMemManager.h ../vm/SwappingStrategy.h ../vm/SwappingManager.h
 tid.o: ../threads/tid.cc ../threads/tid.h ../userprog/bitmap.h \
  ../threads/copyright.h ../threads/utility.h ../threads/copyright.h \
  ../threads/bool.h ../machine/sysdep.h /usr/include/stdio.h \
@@ -180,11 +193,14 @@ ts.o: ../threads/ts.cc ../threads/ts.h ../threads/copyright.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
  /usr/include/xlocale.h ../threads/thread.h ../machine/machine.h \
- ../threads/utility.h ../machine/translate.h ../machine/disk.h \
- ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../threads/utility.h ../machine/TLBManager.h ../machine/translate.h \
+ ../vm/SwappingStrategy.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
  ../threads/tid.h ../userprog/bitmap.h ../filesys/openfile.h \
  ../threads/scheduler.h ../threads/list.h ../machine/timer.h \
- ../machine/interrupt.h ../threads/list.h ../machine/stats.h
+ ../threads/threadmanager.h ../machine/interrupt.h ../threads/list.h \
+ ../machine/stats.h ../vm/MemoryManager.h ../vm/VirtMemManager.h \
+ ../vm/PhyMemManager.h ../vm/SwappingStrategy.h ../vm/SwappingManager.h
 thread.o: ../threads/thread.cc ../threads/copyright.h ../threads/thread.h \
  ../threads/utility.h ../threads/bool.h ../machine/sysdep.h \
  ../threads/copyright.h /usr/include/stdio.h /usr/include/features.h \
@@ -200,12 +216,35 @@ thread.o: ../threads/thread.cc ../threads/copyright.h ../threads/thread.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
  /usr/include/xlocale.h ../machine/machine.h ../threads/utility.h \
- ../machine/translate.h ../machine/disk.h ../userprog/addrspace.h \
- ../filesys/filesys.h ../filesys/openfile.h ../threads/tid.h \
+ ../machine/TLBManager.h ../machine/translate.h ../vm/SwappingStrategy.h \
+ ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
+ ../filesys/openfile.h ../machine/translate.h ../threads/tid.h \
  ../userprog/bitmap.h ../filesys/openfile.h ../threads/switch.h \
  ../threads/synch.h ../threads/list.h ../threads/system.h \
- ../threads/scheduler.h ../machine/timer.h ../machine/interrupt.h \
- ../threads/list.h ../machine/stats.h
+ ../threads/scheduler.h ../machine/timer.h ../threads/threadmanager.h \
+ ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
+ ../vm/MemoryManager.h ../vm/VirtMemManager.h ../vm/PhyMemManager.h \
+ ../vm/SwappingStrategy.h ../vm/SwappingManager.h
+threadmanager.o: ../threads/threadmanager.cc ../threads/threadmanager.h \
+ ../threads/copyright.h ../threads/list.h ../threads/utility.h \
+ ../threads/bool.h ../machine/sysdep.h ../threads/copyright.h \
+ /usr/include/stdio.h /usr/include/features.h /usr/include/stdc-predef.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ /usr/include/xlocale.h ../threads/thread.h ../machine/machine.h \
+ ../threads/utility.h ../machine/TLBManager.h ../machine/translate.h \
+ ../vm/SwappingStrategy.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
+ ../threads/tid.h ../userprog/bitmap.h ../filesys/openfile.h
 utility.o: ../threads/utility.cc ../threads/copyright.h \
  ../threads/utility.h ../threads/bool.h ../machine/sysdep.h \
  ../threads/copyright.h /usr/include/stdio.h /usr/include/features.h \
@@ -237,11 +276,14 @@ threadtest.o: ../threads/threadtest.cc ../threads/copyright.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
  /usr/include/xlocale.h ../threads/thread.h ../machine/machine.h \
- ../threads/utility.h ../machine/translate.h ../machine/disk.h \
- ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../threads/utility.h ../machine/TLBManager.h ../machine/translate.h \
+ ../vm/SwappingStrategy.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
  ../threads/tid.h ../userprog/bitmap.h ../filesys/openfile.h \
  ../threads/scheduler.h ../threads/list.h ../machine/timer.h \
- ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
+ ../threads/threadmanager.h ../machine/interrupt.h ../threads/list.h \
+ ../machine/stats.h ../vm/MemoryManager.h ../vm/VirtMemManager.h \
+ ../vm/PhyMemManager.h ../vm/SwappingStrategy.h ../vm/SwappingManager.h \
  ../threads/ts.h ../threads/synch.h
 interrupt.o: ../machine/interrupt.cc ../threads/copyright.h \
  ../machine/interrupt.h ../threads/list.h ../threads/copyright.h \
@@ -259,11 +301,14 @@ interrupt.o: ../machine/interrupt.cc ../threads/copyright.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
  /usr/include/xlocale.h ../threads/system.h ../threads/thread.h \
- ../machine/machine.h ../threads/utility.h ../machine/translate.h \
- ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
- ../filesys/openfile.h ../threads/tid.h ../userprog/bitmap.h \
+ ../machine/machine.h ../threads/utility.h ../machine/TLBManager.h \
+ ../machine/translate.h ../vm/SwappingStrategy.h ../machine/disk.h \
+ ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../machine/translate.h ../threads/tid.h ../userprog/bitmap.h \
  ../filesys/openfile.h ../threads/scheduler.h ../threads/list.h \
- ../machine/timer.h ../machine/interrupt.h ../machine/stats.h
+ ../machine/timer.h ../threads/threadmanager.h ../machine/interrupt.h \
+ ../machine/stats.h ../vm/MemoryManager.h ../vm/VirtMemManager.h \
+ ../vm/PhyMemManager.h ../vm/SwappingStrategy.h ../vm/SwappingManager.h
 sysdep.o: ../machine/sysdep.cc ../threads/copyright.h \
  /usr/include/stdio.h /usr/include/features.h /usr/include/stdc-predef.h \
  /usr/include/i386-linux-gnu/bits/predefs.h \
@@ -322,11 +367,14 @@ sysdep.o: ../machine/sysdep.cc ../threads/copyright.h \
  ../machine/interrupt.h ../threads/list.h ../threads/copyright.h \
  ../threads/utility.h ../threads/bool.h ../machine/sysdep.h \
  ../threads/system.h ../threads/thread.h ../machine/machine.h \
- ../threads/utility.h ../machine/translate.h ../machine/disk.h \
- ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../threads/utility.h ../machine/TLBManager.h ../machine/translate.h \
+ ../vm/SwappingStrategy.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
  ../threads/tid.h ../userprog/bitmap.h ../filesys/openfile.h \
  ../threads/scheduler.h ../threads/list.h ../machine/timer.h \
- ../machine/interrupt.h ../machine/stats.h
+ ../threads/threadmanager.h ../machine/interrupt.h ../machine/stats.h \
+ ../vm/MemoryManager.h ../vm/VirtMemManager.h ../vm/PhyMemManager.h \
+ ../vm/SwappingStrategy.h ../vm/SwappingManager.h
 stats.o: ../machine/stats.cc ../threads/copyright.h ../threads/utility.h \
  ../threads/copyright.h ../threads/bool.h ../machine/sysdep.h \
  /usr/include/stdio.h /usr/include/features.h /usr/include/stdc-predef.h \
@@ -357,12 +405,15 @@ timer.o: ../machine/timer.cc ../threads/copyright.h ../machine/timer.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
  /usr/include/xlocale.h ../threads/system.h ../threads/utility.h \
- ../threads/thread.h ../machine/machine.h ../machine/translate.h \
- ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
- ../filesys/openfile.h ../threads/tid.h ../userprog/bitmap.h \
+ ../threads/thread.h ../machine/machine.h ../machine/TLBManager.h \
+ ../machine/translate.h ../vm/SwappingStrategy.h ../machine/disk.h \
+ ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../machine/translate.h ../threads/tid.h ../userprog/bitmap.h \
  ../filesys/openfile.h ../threads/scheduler.h ../threads/list.h \
- ../machine/timer.h ../machine/interrupt.h ../threads/list.h \
- ../machine/stats.h
+ ../machine/timer.h ../threads/threadmanager.h ../machine/interrupt.h \
+ ../threads/list.h ../machine/stats.h ../vm/MemoryManager.h \
+ ../vm/VirtMemManager.h ../vm/PhyMemManager.h ../vm/SwappingStrategy.h \
+ ../vm/SwappingManager.h
 addrspace.o: ../userprog/addrspace.cc ../threads/copyright.h \
  ../threads/system.h ../threads/copyright.h ../threads/utility.h \
  ../threads/bool.h ../machine/sysdep.h /usr/include/stdio.h \
@@ -379,11 +430,14 @@ addrspace.o: ../userprog/addrspace.cc ../threads/copyright.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
  /usr/include/xlocale.h ../threads/thread.h ../machine/machine.h \
- ../threads/utility.h ../machine/translate.h ../machine/disk.h \
- ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../threads/utility.h ../machine/TLBManager.h ../machine/translate.h \
+ ../vm/SwappingStrategy.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
  ../threads/tid.h ../userprog/bitmap.h ../filesys/openfile.h \
  ../threads/scheduler.h ../threads/list.h ../machine/timer.h \
- ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
+ ../threads/threadmanager.h ../machine/interrupt.h ../threads/list.h \
+ ../machine/stats.h ../vm/MemoryManager.h ../vm/VirtMemManager.h \
+ ../vm/PhyMemManager.h ../vm/SwappingStrategy.h ../vm/SwappingManager.h \
  ../userprog/addrspace.h ../bin/noff.h
 bitmap.o: ../userprog/bitmap.cc ../threads/copyright.h \
  ../userprog/bitmap.h ../threads/utility.h ../threads/copyright.h \
@@ -417,11 +471,14 @@ exception.o: ../userprog/exception.cc ../threads/copyright.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
  /usr/include/xlocale.h ../threads/thread.h ../machine/machine.h \
- ../threads/utility.h ../machine/translate.h ../machine/disk.h \
- ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../threads/utility.h ../machine/TLBManager.h ../machine/translate.h \
+ ../vm/SwappingStrategy.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
  ../threads/tid.h ../userprog/bitmap.h ../filesys/openfile.h \
  ../threads/scheduler.h ../threads/list.h ../machine/timer.h \
- ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
+ ../threads/threadmanager.h ../machine/interrupt.h ../threads/list.h \
+ ../machine/stats.h ../vm/MemoryManager.h ../vm/VirtMemManager.h \
+ ../vm/PhyMemManager.h ../vm/SwappingStrategy.h ../vm/SwappingManager.h \
  ../userprog/syscall.h
 progtest.o: ../userprog/progtest.cc ../threads/copyright.h \
  ../threads/system.h ../threads/copyright.h ../threads/utility.h \
@@ -439,11 +496,14 @@ progtest.o: ../userprog/progtest.cc ../threads/copyright.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
  /usr/include/xlocale.h ../threads/thread.h ../machine/machine.h \
- ../threads/utility.h ../machine/translate.h ../machine/disk.h \
- ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../threads/utility.h ../machine/TLBManager.h ../machine/translate.h \
+ ../vm/SwappingStrategy.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
  ../threads/tid.h ../userprog/bitmap.h ../filesys/openfile.h \
  ../threads/scheduler.h ../threads/list.h ../machine/timer.h \
- ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
+ ../threads/threadmanager.h ../machine/interrupt.h ../threads/list.h \
+ ../machine/stats.h ../vm/MemoryManager.h ../vm/VirtMemManager.h \
+ ../vm/PhyMemManager.h ../vm/SwappingStrategy.h ../vm/SwappingManager.h \
  ../machine/console.h ../userprog/addrspace.h ../threads/synch.h
 console.o: ../machine/console.cc ../threads/copyright.h \
  ../machine/console.h ../threads/utility.h ../threads/copyright.h \
@@ -461,12 +521,15 @@ console.o: ../machine/console.cc ../threads/copyright.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
  /usr/include/xlocale.h ../threads/system.h ../threads/utility.h \
- ../threads/thread.h ../machine/machine.h ../machine/translate.h \
- ../machine/disk.h ../userprog/addrspace.h ../filesys/filesys.h \
- ../filesys/openfile.h ../threads/tid.h ../userprog/bitmap.h \
+ ../threads/thread.h ../machine/machine.h ../machine/TLBManager.h \
+ ../machine/translate.h ../vm/SwappingStrategy.h ../machine/disk.h \
+ ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../machine/translate.h ../threads/tid.h ../userprog/bitmap.h \
  ../filesys/openfile.h ../threads/scheduler.h ../threads/list.h \
- ../machine/timer.h ../machine/interrupt.h ../threads/list.h \
- ../machine/stats.h
+ ../machine/timer.h ../threads/threadmanager.h ../machine/interrupt.h \
+ ../threads/list.h ../machine/stats.h ../vm/MemoryManager.h \
+ ../vm/VirtMemManager.h ../vm/PhyMemManager.h ../vm/SwappingStrategy.h \
+ ../vm/SwappingManager.h
 machine.o: ../machine/machine.cc ../threads/copyright.h \
  ../machine/machine.h ../threads/utility.h ../threads/copyright.h \
  ../threads/bool.h ../machine/sysdep.h /usr/include/stdio.h \
@@ -482,13 +545,16 @@ machine.o: ../machine/machine.cc ../threads/copyright.h \
  /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/xlocale.h ../machine/translate.h ../machine/disk.h \
- ../threads/system.h ../threads/utility.h ../threads/thread.h \
- ../machine/machine.h ../userprog/addrspace.h ../filesys/filesys.h \
- ../filesys/openfile.h ../threads/tid.h ../userprog/bitmap.h \
+ /usr/include/xlocale.h ../machine/TLBManager.h ../machine/translate.h \
+ ../vm/SwappingStrategy.h ../machine/disk.h ../threads/system.h \
+ ../threads/utility.h ../threads/thread.h ../machine/machine.h \
+ ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../machine/translate.h ../threads/tid.h ../userprog/bitmap.h \
  ../filesys/openfile.h ../threads/scheduler.h ../threads/list.h \
- ../machine/timer.h ../machine/interrupt.h ../threads/list.h \
- ../machine/stats.h
+ ../machine/timer.h ../threads/threadmanager.h ../machine/interrupt.h \
+ ../threads/list.h ../machine/stats.h ../vm/MemoryManager.h \
+ ../vm/VirtMemManager.h ../vm/PhyMemManager.h ../vm/SwappingStrategy.h \
+ ../vm/SwappingManager.h
 mipssim.o: ../machine/mipssim.cc ../threads/copyright.h \
  ../machine/machine.h ../threads/utility.h ../threads/copyright.h \
  ../threads/bool.h ../machine/sysdep.h /usr/include/stdio.h \
@@ -504,13 +570,16 @@ mipssim.o: ../machine/mipssim.cc ../threads/copyright.h \
  /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/xlocale.h ../machine/translate.h ../machine/disk.h \
- ../machine/mipssim.h ../threads/system.h ../threads/utility.h \
- ../threads/thread.h ../machine/machine.h ../userprog/addrspace.h \
- ../filesys/filesys.h ../filesys/openfile.h ../threads/tid.h \
+ /usr/include/xlocale.h ../machine/TLBManager.h ../machine/translate.h \
+ ../vm/SwappingStrategy.h ../machine/disk.h ../machine/mipssim.h \
+ ../threads/system.h ../threads/utility.h ../threads/thread.h \
+ ../machine/machine.h ../userprog/addrspace.h ../filesys/filesys.h \
+ ../filesys/openfile.h ../machine/translate.h ../threads/tid.h \
  ../userprog/bitmap.h ../filesys/openfile.h ../threads/scheduler.h \
- ../threads/list.h ../machine/timer.h ../machine/interrupt.h \
- ../threads/list.h ../machine/stats.h
+ ../threads/list.h ../machine/timer.h ../threads/threadmanager.h \
+ ../machine/interrupt.h ../threads/list.h ../machine/stats.h \
+ ../vm/MemoryManager.h ../vm/VirtMemManager.h ../vm/PhyMemManager.h \
+ ../vm/SwappingStrategy.h ../vm/SwappingManager.h
 translate.o: ../machine/translate.cc ../threads/copyright.h \
  ../machine/machine.h ../threads/utility.h ../threads/copyright.h \
  ../threads/bool.h ../machine/sysdep.h /usr/include/stdio.h \
@@ -526,13 +595,163 @@ translate.o: ../machine/translate.cc ../threads/copyright.h \
  /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
  /usr/include/i386-linux-gnu/bits/stdio_lim.h \
  /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
- /usr/include/xlocale.h ../machine/translate.h ../machine/disk.h \
- ../userprog/addrspace.h ../filesys/filesys.h ../filesys/openfile.h \
+ /usr/include/xlocale.h ../machine/TLBManager.h ../machine/translate.h \
+ ../vm/SwappingStrategy.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
  ../threads/system.h ../threads/utility.h ../threads/thread.h \
  ../machine/machine.h ../threads/tid.h ../userprog/bitmap.h \
  ../filesys/openfile.h ../threads/scheduler.h ../threads/list.h \
- ../machine/timer.h ../machine/interrupt.h ../threads/list.h \
- ../machine/stats.h
+ ../machine/timer.h ../threads/threadmanager.h ../machine/interrupt.h \
+ ../threads/list.h ../machine/stats.h ../vm/MemoryManager.h \
+ ../vm/VirtMemManager.h ../vm/PhyMemManager.h ../vm/SwappingStrategy.h \
+ ../vm/SwappingManager.h
+TLBManager.o: ../machine/TLBManager.cc ../userprog/addrspace.h \
+ ../threads/copyright.h ../filesys/filesys.h ../filesys/openfile.h \
+ ../threads/utility.h ../threads/copyright.h ../threads/bool.h \
+ ../machine/sysdep.h /usr/include/stdio.h /usr/include/features.h \
+ /usr/include/stdc-predef.h /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ /usr/include/xlocale.h ../machine/translate.h ../threads/system.h \
+ ../threads/utility.h ../threads/thread.h ../machine/machine.h \
+ ../machine/TLBManager.h ../machine/translate.h ../vm/SwappingStrategy.h \
+ ../machine/disk.h ../threads/tid.h ../userprog/bitmap.h \
+ ../filesys/openfile.h ../threads/scheduler.h ../threads/list.h \
+ ../machine/timer.h ../threads/threadmanager.h ../machine/interrupt.h \
+ ../threads/list.h ../machine/stats.h ../vm/MemoryManager.h \
+ ../vm/VirtMemManager.h ../vm/PhyMemManager.h ../vm/SwappingStrategy.h \
+ ../vm/SwappingManager.h ../vm/SwappingLRU.h
+VirtMemManager.o: ../vm/VirtMemManager.cc ../threads/system.h \
+ ../threads/copyright.h ../threads/utility.h ../threads/bool.h \
+ ../machine/sysdep.h ../threads/copyright.h /usr/include/stdio.h \
+ /usr/include/features.h /usr/include/stdc-predef.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ /usr/include/xlocale.h ../threads/thread.h ../machine/machine.h \
+ ../threads/utility.h ../machine/TLBManager.h ../machine/translate.h \
+ ../vm/SwappingStrategy.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
+ ../threads/tid.h ../userprog/bitmap.h ../filesys/openfile.h \
+ ../threads/scheduler.h ../threads/list.h ../machine/timer.h \
+ ../threads/threadmanager.h ../machine/interrupt.h ../threads/list.h \
+ ../machine/stats.h ../vm/MemoryManager.h ../vm/VirtMemManager.h \
+ ../vm/PhyMemManager.h ../vm/SwappingStrategy.h ../vm/SwappingManager.h
+PhyMemManager.o: ../vm/PhyMemManager.cc ../threads/system.h \
+ ../threads/copyright.h ../threads/utility.h ../threads/bool.h \
+ ../machine/sysdep.h ../threads/copyright.h /usr/include/stdio.h \
+ /usr/include/features.h /usr/include/stdc-predef.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ /usr/include/xlocale.h ../threads/thread.h ../machine/machine.h \
+ ../threads/utility.h ../machine/TLBManager.h ../machine/translate.h \
+ ../vm/SwappingStrategy.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
+ ../threads/tid.h ../userprog/bitmap.h ../filesys/openfile.h \
+ ../threads/scheduler.h ../threads/list.h ../machine/timer.h \
+ ../threads/threadmanager.h ../machine/interrupt.h ../threads/list.h \
+ ../machine/stats.h ../vm/MemoryManager.h ../vm/VirtMemManager.h \
+ ../vm/PhyMemManager.h ../vm/SwappingStrategy.h ../vm/SwappingManager.h \
+ ../vm/SwappingLRU.h
+SwappingManager.o: ../vm/SwappingManager.cc ../threads/system.h \
+ ../threads/copyright.h ../threads/utility.h ../threads/bool.h \
+ ../machine/sysdep.h ../threads/copyright.h /usr/include/stdio.h \
+ /usr/include/features.h /usr/include/stdc-predef.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ /usr/include/xlocale.h ../threads/thread.h ../machine/machine.h \
+ ../threads/utility.h ../machine/TLBManager.h ../machine/translate.h \
+ ../vm/SwappingStrategy.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
+ ../threads/tid.h ../userprog/bitmap.h ../filesys/openfile.h \
+ ../threads/scheduler.h ../threads/list.h ../machine/timer.h \
+ ../threads/threadmanager.h ../machine/interrupt.h ../threads/list.h \
+ ../machine/stats.h ../vm/MemoryManager.h ../vm/VirtMemManager.h \
+ ../vm/PhyMemManager.h ../vm/SwappingStrategy.h ../vm/SwappingManager.h
+MemoryManager.o: ../vm/MemoryManager.cc ../threads/system.h \
+ ../threads/copyright.h ../threads/utility.h ../threads/bool.h \
+ ../machine/sysdep.h ../threads/copyright.h /usr/include/stdio.h \
+ /usr/include/features.h /usr/include/stdc-predef.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ /usr/include/xlocale.h ../threads/thread.h ../machine/machine.h \
+ ../threads/utility.h ../machine/TLBManager.h ../machine/translate.h \
+ ../vm/SwappingStrategy.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
+ ../threads/tid.h ../userprog/bitmap.h ../filesys/openfile.h \
+ ../threads/scheduler.h ../threads/list.h ../machine/timer.h \
+ ../threads/threadmanager.h ../machine/interrupt.h ../threads/list.h \
+ ../machine/stats.h ../vm/MemoryManager.h ../vm/VirtMemManager.h \
+ ../vm/PhyMemManager.h ../vm/SwappingStrategy.h ../vm/SwappingManager.h \
+ ../bin/noff.h ../threads/threadmanager.h ../vm/MemoryManager.h
+SwappingLRU.o: ../vm/SwappingLRU.cc ../threads/system.h \
+ ../threads/copyright.h ../threads/utility.h ../threads/bool.h \
+ ../machine/sysdep.h ../threads/copyright.h /usr/include/stdio.h \
+ /usr/include/features.h /usr/include/stdc-predef.h \
+ /usr/include/i386-linux-gnu/bits/predefs.h \
+ /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/4.7/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h ../threads/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h /usr/include/string.h \
+ /usr/include/xlocale.h ../threads/thread.h ../machine/machine.h \
+ ../threads/utility.h ../machine/TLBManager.h ../machine/translate.h \
+ ../vm/SwappingStrategy.h ../machine/disk.h ../userprog/addrspace.h \
+ ../filesys/filesys.h ../filesys/openfile.h ../machine/translate.h \
+ ../threads/tid.h ../userprog/bitmap.h ../filesys/openfile.h \
+ ../threads/scheduler.h ../threads/list.h ../machine/timer.h \
+ ../threads/threadmanager.h ../machine/interrupt.h ../threads/list.h \
+ ../machine/stats.h ../vm/MemoryManager.h ../vm/VirtMemManager.h \
+ ../vm/PhyMemManager.h ../vm/SwappingStrategy.h ../vm/SwappingManager.h \
+ ../vm/SwappingLRU.h
 # DEPENDENCIES MUST END AT END OF FILE
 # IF YOU PUT STUFF HERE IT WILL GO AWAY
 # see make depend above

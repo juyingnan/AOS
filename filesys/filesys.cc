@@ -1,9 +1,9 @@
-// filesys.cc 
+// filesys.cc
 //	Routines to manage the overall operation of the file system.
 //	Implements routines to map from textual file names to files.
 //
 //	Each file in the file system has:
-//	   A file header, stored in a sector on disk 
+//	   A file header, stored in a sector on disk
 //		(the size of the file header data structure is arranged
 //		to be precisely the size of 1 disk sector)
 //	   A number of data blocks
@@ -15,7 +15,7 @@
 //
 //      Both the bitmap and the directory are represented as normal
 //	files.  Their file headers are located in specific sectors
-//	(sector 0 and sector 1), so that the file system can find them 
+//	(sector 0 and sector 1), so that the file system can find them
 //	on bootup.
 //
 //	The file system assumes that the bitmap and directory files are
@@ -40,7 +40,7 @@
 //	    the file system, it may corrupt the disk)
 //
 // Copyright (c) 1992-1993 The Regents of the University of California.
-// All rights reserved.  See copyright.h for copyright notice and limitation 
+// All rights reserved.  See copyright.h for copyright notice and limitation
 // of liability and disclaimer of warranty provisions.
 
 #include "copyright.h"
@@ -51,13 +51,13 @@
 #include "filehdr.h"
 #include "filesys.h"
 // Sectors containing the file headers for the bitmap of free sectors,
-// and the directory of files.  These file headers are placed in well-known 
+// and the directory of files.  These file headers are placed in well-known
 // sectors, so that they can be located on boot-up.
 #define FreeMapSector 		0
 #define DirectorySector 	1
 
 // Initial file sizes for the bitmap and directory; until the file system
-// supports extensible files, the directory size sets the maximum number 
+// supports extensible files, the directory size sets the maximum number
 // of files that can be loaded onto the disk.
 #define FreeMapFileSize 	(NumSectors / BitsInByte)
 #define NumDirEntries 		10
@@ -69,7 +69,7 @@
 // 	Initialize the file system.  If format = TRUE, the disk has
 //	nothing on it, and we need to initialize the disk to contain
 //	an empty directory, and a bitmap of free sectors (with almost but
-//	not all of the sectors marked as free).  
+//	not all of the sectors marked as free).
 //
 //	If format = FALSE, we just have to open the files
 //	representing the bitmap and the directory.
@@ -82,7 +82,7 @@ OpenFile* rootDirectoryFile = NULL;// "Root" directory -- list of
 OpenFile* currentDirectoryFile = NULL;
 
 FileSystem::FileSystem(bool format)
-{ 
+{
 	DEBUG('f', "Initializing the file system.\n");
 	if (format) {
 		BitMap *freeMap = new BitMap(NumSectors);
@@ -168,7 +168,7 @@ FileSystem::FileSystem(bool format)
 }
 
 /**
- * Added by Rye
+ * Added By Ju Yingnan
  */
 int FileSystem::ParseDirectory(char* name) {//find the directory the file is in, if the file is a directory, return it's father directory
 
@@ -267,7 +267,7 @@ int FileSystem::ParseDirectory(char* name) {//find the directory the file is in,
 //        Allocate a sector for the file header
 // 	  Allocate space on disk for the data blocks for the file
 //	  Add the name to the directory
-//	  Store the new file header on disk 
+//	  Store the new file header on disk
 //	  Flush the changes to the bitmap and the directory back to disk
 //
 //	Return TRUE if everything goes ok, otherwise, return FALSE.
@@ -276,7 +276,7 @@ int FileSystem::ParseDirectory(char* name) {//find the directory the file is in,
 //   		file is already in directory
 //	 	no free space for file header
 //	 	no free entry for file in directory
-//	 	no free space for data blocks for the file 
+//	 	no free space for data blocks for the file
 //
 // 	Note that this implementation assumes there is no concurrent access
 //	to the file system!
@@ -354,9 +354,9 @@ FileSystem::Create(char *name, int fileType)
 
 //----------------------------------------------------------------------
 // FileSystem::Open
-// 	Open a file for reading and writing.  
+// 	Open a file for reading and writing.
 //	To open a file:
-//	  Find the location of the file's header, using the directory 
+//	  Find the location of the file's header, using the directory
 //	  Bring the header into memory
 //
 //	"name" -- the text name of the file to be opened
@@ -364,7 +364,7 @@ FileSystem::Create(char *name, int fileType)
 
 OpenFile *
 FileSystem::Open(char *name)
-{ 
+{
 	char* nameBuffer;
 	Directory *directory;
 	OpenFile *openFile = NULL;
@@ -499,7 +499,7 @@ bool FileSystem::RecurseRemove(char *name) {//just modified the DirectoryEntry
 
 bool
 FileSystem::Remove(char *name)
-{ 
+{
 	char* nameBuffer;
 	Directory *directory;
 	BitMap *freeMap;
@@ -537,7 +537,7 @@ FileSystem::Remove(char *name)
 	delete directory;
 	delete freeMap;
 	return TRUE;
-} 
+}
 
 //----------------------------------------------------------------------
 // FileSystem::List

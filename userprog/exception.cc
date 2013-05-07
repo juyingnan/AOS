@@ -66,6 +66,8 @@ static void SysCallYieldHandler();
 
 static void ExceptionPageFaultHanlder();
 
+static void ThreadFuncForUserProg(int arg);
+
 void
 ExceptionHandler(ExceptionType which)
 {
@@ -194,6 +196,7 @@ static void SysCallCreateHandler()
         printf("File %s created successful.\n", name);
     }
     delete name;
+    machine->PCForward();
 }
 
 /******************************
@@ -229,6 +232,7 @@ static void SysCallOpenHandler()
 #endif
     machine->WriteRegister(2, fd);
     delete name;
+    machine->PCForward();
 }
 
 /******************************
@@ -248,6 +252,7 @@ static void SysCallCloseHandler()
     delete file;
     fileSystem->RemoveFromTable(fd);
 #endif
+    machine->PCForward();
 }
 
 /******************************
@@ -282,6 +287,7 @@ static void SysCallWriteHandler()
         printf("Exception: Write %d bytes successfully\n", realSize);
     }
     delete buffer;
+    machine->PCForward();
 }
 
 /******************************
@@ -317,6 +323,7 @@ static void SysCallReadHandler()
         printf("Exception: Read %d bytes successfully\n", realSize);
     }
     delete buffer;
+    machine->PCForward();
 }
 
 /******************************
@@ -324,6 +331,46 @@ EXEC
 ******************************/
 static void SysCallExecHandler()
 {
+    //char fileName[100];
+    int arg = machine->ReadRegister(4);
+    int i = 0;
+//    do
+//    {
+//        machine->ReadMem(arg + i, 1, (int*)&fileName[i]);
+//    }
+//    while(fileName[i++] != '\0');
+
+    int value;
+    do{
+    machine->ReadMem(arg++,1,&value);
+    i++;
+    }while(value!=0);
+    arg-=i;
+    char fileName[i];
+    for(int j=0;j<i;j++)
+    {
+    machine->ReadMem(arg+i,1,&value);
+    fileName[j]=(char)value;
+    }
+
+    OpenFile* executable = fileSystem->Open(fileName);
+    if(executable != NULL)
+    {
+        Thread* thread = threadManager->createThread(fileName);
+        thread->space = memoryManager->createAddrSpace(thread->GetTid(), executable);
+        machine->WriteRegister(2, thread->GetTid());
+
+        DEBUG('a', "Exec from thread %d -> executable %s\n",
+              currentThread->GetTid(), fileName);
+              thread->setPriority(0);
+        thread->Fork(ThreadFuncForUserProg, 1);
+    }
+    else
+    {
+        machine->WriteRegister(2, -1);
+    }
+
+    machine->PCForward();
 }
 
 /******************************
@@ -331,6 +378,11 @@ EXIT
 ******************************/
 static void SysCallExitHandler()
 {
+    int threadId = currentThread->GetTid();
+    memoryManager->deleteAddrSpace(threadId);
+    currentThread->Finish();
+
+    machine->PCForward();
 }
 
 /******************************
@@ -345,6 +397,21 @@ FORK
 ******************************/
 static void SysCallForkHandler()
 {
+    Thread* thread = threadManager->createThread("UserProg");
+    thread->space = memoryManager->shareAddrSpace(currentThread->GetTid(),
+                    thread->GetTid());
+    int userFunc = machine->ReadRegister(4);
+    thread->SetUserRegister(PCReg, userFunc);
+    thread->SetUserRegister(NextPCReg, userFunc + 4);
+    thread->SetUserRegister(StackReg, machine->ReadRegister(StackReg) - 4);
+
+    DEBUG('a', "Fork from thread %d -> thread %d\n",
+          currentThread->GetTid(),
+          thread->GetTid());
+
+    thread->Fork(ThreadFuncForUserProg, 0);
+
+    machine->PCForward();
 }
 
 /******************************
@@ -352,8 +419,41 @@ YEILD
 ******************************/
 static void SysCallYieldHandler()
 {
+    currentThread->Yield();
+
+    machine->PCForward();
+}
+
+static void ThreadFuncForUserProg(int arg)
+{
+    currentThread->RestoreUserState();
+// TODO: Need to modify 3 registers: pc, next pc, sp
+    if(arg && currentThread->space != NULL)
+    {
+// Exec should initialize registers and restore address space.
+        currentThread->space->InitRegisters();
+        currentThread->space->RestoreState();
+    }
+
+    machine->Run();
 }
 
 static void ExceptionPageFaultHanlder()
 {
+	// 1. Get the TLB miss address and calculate which page it belong to.
+	int addr = machine->ReadRegister(BadVAddrReg);
+	int vpn = (unsigned) addr / PageSize;
+
+	// 2. Handle whether this virtual page in memory or not.
+	// After this step, this virtual page is in the physical memory.
+	memoryManager->process(vpn);
+
+	if(machine->tlb != NULL)
+	{
+		// 3. Cache this page in TLB.
+		machine->tlb->cacheOnePageEntry(vpn);
+	}
+
+	// 4. Page fault statistics.
+	stats->numPageFaults++;
 }

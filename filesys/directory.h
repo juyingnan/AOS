@@ -1,15 +1,15 @@
-// directory.h 
+// directory.h
 //	Data structures to manage a UNIX-like directory of file names.
-// 
+//
 //      A directory is a table of pairs: <file name, sector #>,
-//	giving the name of each file in the directory, and 
+//	giving the name of each file in the directory, and
 //	where to find its file header (the data structure describing
 //	where to find the file's data blocks) on disk.
 //
 //      We assume mutual exclusion is provided by the caller.
 //
 // Copyright (c) 1992-1993 The Regents of the University of California.
-// All rights reserved.  See copyright.h for copyright notice and limitation 
+// All rights reserved.  See copyright.h for copyright notice and limitation
 // of liability and disclaimer of warranty provisions.
 
 
@@ -39,7 +39,7 @@ public:
 	char name[FileNameMaxLen + 1];
 //	int type;
 	/**
-	 * Added by Rye
+	 * Added By Ju Yingnan
 	 */
 	int fileType;
 	char createTime[25];//Time that this file is created.
@@ -68,7 +68,7 @@ public:
 //
 // The constructor initializes a directory structure in memory; the
 // FetchFrom/WriteBack operations shuffle the directory information
-// from/to disk. 
+// from/to disk.
 
 class Directory {
 public:

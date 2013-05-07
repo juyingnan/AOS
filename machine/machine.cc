@@ -57,14 +57,18 @@ Machine::Machine(bool debug)
     int i;
 
     for (i = 0; i < NumTotalRegs; i++)
+	{
         registers[i] = 0;
+	}
+
     mainMemory = new char[MemorySize];
     for (i = 0; i < MemorySize; i++)
+	{
       	mainMemory[i] = 0;
+	}
+
 #ifdef USE_TLB
-    tlb = new TranslationEntry[TLBSize];
-    for (i = 0; i < TLBSize; i++)
-	tlb[i].valid = FALSE;
+	tlb = new TLBManager(TLBSize);
     pageTable = NULL;
 #else	// use linear page table
     tlb = NULL;
@@ -83,8 +87,11 @@ Machine::Machine(bool debug)
 Machine::~Machine()
 {
     delete [] mainMemory;
+
     if (tlb != NULL)
-        delete [] tlb;
+	{
+        delete tlb;
+	}
 }
 
 //----------------------------------------------------------------------
@@ -106,13 +113,6 @@ Machine::RaiseException(ExceptionType which, int badVAddr)
     registers[BadVAddrReg] = badVAddr;
     DelayedLoad(0, 0);			// finish anything in progress
     interrupt->setStatus(SystemMode);
-
-    //Added by Ju Yingnan
-    //2013-5-6
-	registers[PrevPCReg] = registers[PCReg];
-	registers[PCReg] += sizeof(int);
-	registers[NextPCReg] += sizeof(int);
-
     ExceptionHandler(which);		// interrupts are enabled at this point
     interrupt->setStatus(UserMode);
 }
@@ -219,3 +219,10 @@ void Machine::WriteRegister(int num, int value)
 	registers[num] = value;
     }
 
+void
+Machine::PCForward()
+{
+	WriteRegister(PrevPCReg, registers[PCReg]);
+	WriteRegister(PCReg, registers[PCReg] + sizeof(int));
+	WriteRegister(NextPCReg, registers[NextPCReg] + sizeof(int));
+}

@@ -292,6 +292,8 @@
 		<Unit filename="../filesys/utility.o">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="../machine/TLBManager.cc" />
+		<Unit filename="../machine/TLBManager.h" />
 		<Unit filename="../machine/console.cc">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
@@ -475,6 +477,12 @@
 		<Unit filename="../test/create.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="../test/exec.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../test/exit.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="../test/halt">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
@@ -651,6 +659,8 @@
 		<Unit filename="../threads/thread.o">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="../threads/threadmanager.cc" />
+		<Unit filename="../threads/threadmanager.h" />
 		<Unit filename="../threads/threadtest.cc">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
@@ -774,6 +784,17 @@
 		<Unit filename="../vm/Makefile">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
+		<Unit filename="../vm/MemoryManager.cc" />
+		<Unit filename="../vm/MemoryManager.h" />
+		<Unit filename="../vm/PhyMemManager.cc" />
+		<Unit filename="../vm/PhyMemManager.h" />
+		<Unit filename="../vm/SwappingLRU.cc" />
+		<Unit filename="../vm/SwappingLRU.h" />
+		<Unit filename="../vm/SwappingManager.cc" />
+		<Unit filename="../vm/SwappingManager.h" />
+		<Unit filename="../vm/SwappingStrategy.h" />
+		<Unit filename="../vm/VirtMemManager.cc" />
+		<Unit filename="../vm/VirtMemManager.h" />
 		<Unit filename="../vm/addrspace.o">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>

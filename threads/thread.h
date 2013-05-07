@@ -90,127 +90,132 @@ extern void DecreasePriority(int arg);
 
 class Thread
 {
-private:
-    // NOTE: DO NOT CHANGE the order of these first two members.
-    // THEY MUST be in this position for SWITCH to work.
-    int* stackTop;			 // the current stack pointer
-    int machineState[MachineStateSize];  // all registers except for stackTop
+    private:
+        // NOTE: DO NOT CHANGE the order of these first two members.
+        // THEY MUST be in this position for SWITCH to work.
+        int* stackTop;			 // the current stack pointer
+        int machineState[MachineStateSize];  // all registers except for stackTop
 
-public:
-    Thread(char* debugName);		// initialize a Thread
-    ~Thread(); 				// deallocate a Thread
-    // NOTE -- thread being deleted
-    // must not be running when delete
-    // is called
+    public:
+        Thread(char* debugName);		// initialize a Thread
+        Thread(char* debugName, int UID, int PID);		// initialize a Thread
+        ~Thread(); 				// deallocate a Thread
+        // NOTE -- thread being deleted
+        // must not be running when delete
+        // is called
 
-    // basic thread operations
+        // basic thread operations
 
-    void Fork(VoidFunctionPtr func, int arg); 	// Make thread run (*func)(arg)
-    void Yield();  				// Relinquish the CPU if any
-    // other thread is runnable
-    void Sleep();  				// Put the thread to sleep and
-    // relinquish the processor
-    void Finish();  				// The thread is done executing
+        void Fork(VoidFunctionPtr func, int arg); 	// Make thread run (*func)(arg)
+        void Yield();  				// Relinquish the CPU if any
+        // other thread is runnable
+        void Sleep();  				// Put the thread to sleep and
+        // relinquish the processor
+        void Finish();  				// The thread is done executing
 
-    void CheckOverflow();   			// Check if thread has
-    // overflowed its stack
-    void setStatus(ThreadStatus st)
-    {
-        status = st;
-    }
-    char* getName()
-    {
-        return (name);
-    }
-    void Print()
-    {
-        //Print information of this thread.
-        //Original
-        //printf("%s, ", name);
-        //Add by Ju Yingnan
-        //2013-3-19
-        printf("%2d\t%2d\t%10s\t\t", tid, uid, name);
-        switch(status)
+        void CheckOverflow();   			// Check if thread has
+        // overflowed its stack
+        void setStatus(ThreadStatus st)
         {
-        case JUST_CREATED :
-            printf("JUST_CREATED\t");
-            break;
-        case RUNNING :
-            printf("RUNNING\t\t");
-            break;
-        case BLOCKED :
-            printf("BLOCKED\t\t");
-            break;
-        case READY 	 :
-            printf("READY\t\t");
-            break;
+            status = st;
         }
-    	printf("%3d\t\t%3d\n", priority, timeSlices);
-    }
+        char* getName()
+        {
+            return (name);
+        }
+        void Print()
+        {
+            //Print information of this thread.
+            //Original
+            //printf("%s, ", name);
+            //Add by Ju Yingnan
+            //2013-3-19
+            printf("%2d\t%2d\t%10s\t\t", tid, uid, name);
+            switch(status)
+            {
+                case JUST_CREATED :
+                    printf("JUST_CREATED\t");
+                    break;
+                case RUNNING :
+                    printf("RUNNING\t\t");
+                    break;
+                case BLOCKED :
+                    printf("BLOCKED\t\t");
+                    break;
+                case READY 	 :
+                    printf("READY\t\t");
+                    break;
+            }
+            printf("%3d\t\t%3d\n", priority, timeSlices);
+        }
 
 
-    //Added by Ju Yingnan
-    //2013-3-17
-    //get Thread ID
-    int GetTid()
-    {
-        return tid;
-    }
-    //get User ID
-    int GetUid()
-    {
-        return uid;
-    }
-    //2013-3-19
-    int getPriority()
-    {
-        return (priority);
-    }
-    void setPriority(int pri)
-    {
-        priority = pri;
-    }
-    int getTimeSlice()
-    {
-        return (timeSlices);
-    }
-    void setTimeSlice(int slice)
-    {
-        timeSlices = slice;
-    }
-    void setDefaultTimeSlice()
-    {
-        timeSlices = TIMESLICE_DEFAULT;
-    }
+        //Added by Ju Yingnan
+        //2013-3-17
+        //get Thread ID
+        int GetTid()
+        {
+            return tid;
+        }
+        //get User ID
+        int GetUid()
+        {
+            return uid;
+        }
+        //2013-3-19
+        int getPriority()
+        {
+            return (priority);
+        }
+        ThreadStatus getStatus()
+        {
+            return (status);
+        }
+        void setPriority(int pri)
+        {
+            priority = pri;
+        }
+        int getTimeSlice()
+        {
+            return (timeSlices);
+        }
+        void setTimeSlice(int slice)
+        {
+            timeSlices = slice;
+        }
+        void setDefaultTimeSlice()
+        {
+            timeSlices = TIMESLICE_DEFAULT;
+        }
 
-private:
-    // some of the private data for this class is listed above
+    private:
+        // some of the private data for this class is listed above
 
-    int* stack; 	 		// Bottom of the stack
-    // NULL if this is the main thread
-    // (If NULL, don't deallocate stack)
-    ThreadStatus status;		// ready, running or blocked
-    char* name;
+        int* stack; 	 		// Bottom of the stack
+        // NULL if this is the main thread
+        // (If NULL, don't deallocate stack)
+        ThreadStatus status;		// ready, running or blocked
+        char* name;
 
-    //Added by Ju Yingnan
-    //2013-3-17
-    int tid;// thread id
-    int uid;// user id
-    //2013-3-19
-    int priority;
-    int timeSlices;
+        //Added by Ju Yingnan
+        //2013-3-17
+        int tid;// thread id
+        int uid;// user id
+        //2013-3-19
+        int priority;
+        int timeSlices;
 
 
-    void StackAllocate(VoidFunctionPtr func, int arg);
-    // Allocate a stack for thread.
-    // Used internally by Fork()
-public:
-    //Added by Ju Yingnan
-    //2013-3-19
-    void DecreasePriority()
-    {
-        priority *= PRIORITY_FADE;
-    }
+        void StackAllocate(VoidFunctionPtr func, int arg);
+        // Allocate a stack for thread.
+        // Used internally by Fork()
+    public:
+        //Added by Ju Yingnan
+        //2013-3-19
+        void DecreasePriority()
+        {
+            priority *= PRIORITY_FADE;
+        }
 
 
 
@@ -220,13 +225,14 @@ public:
 // one for its state while executing user code, one for its state
 // while executing kernel code.
 
-    int userRegisters[NumTotalRegs];	// user-level CPU register state
+        int userRegisters[NumTotalRegs];	// user-level CPU register state
 
-public:
-    void SaveUserState();		// save user-level register state
-    void RestoreUserState();		// restore user-level register state
+    public:
+        void SaveUserState();		// save user-level register state
+        void RestoreUserState();		// restore user-level register state
+        void SetUserRegister(int id, int value); // set user-level register value
 
-    AddrSpace *space;			// User code this thread is running.
+        AddrSpace *space;			// User code this thread is running.
 #endif
 };
 

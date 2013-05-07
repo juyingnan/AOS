@@ -43,17 +43,25 @@
 #ifdef USER_PROGRAM
 #include "machine.h"
 #include "addrspace.h"
+#endif
 
 //Added by Ju Yingnan
 //2013-3-17
 #include "tid.h"
-#endif
+
 
 // CPU register state to be saved on context switch.
 // The SPARC and MIPS only need 10 registers, but the Snake needs 18.
 // For simplicity, this is just the max over all architectures.
 #define MachineStateSize 18
 
+//Added by Ju Yingnan
+//2013-3-19
+#define LOWEST_PRIORITY 255
+#define HIGHEST_PRIORITY 0
+#define DEFAULT_PRIORITY 50
+#define PRIORITY_FADE 0.75
+#define TIMESLICE_DEFAULT 1;
 
 // Size of the thread's private execution stack.
 // WATCH OUT IF THIS ISN'T BIG ENOUGH!!!!!
@@ -65,6 +73,9 @@ enum ThreadStatus { JUST_CREATED, RUNNING, READY, BLOCKED };
 
 // external function, dummy routine whose sole job is to call Thread::Print
 extern void ThreadPrint(int arg);
+//Added by Ju Yingnan
+//2013-3-19
+extern void DecreasePriority(int arg);
 
 // The following class defines a "thread control block" -- which
 // represents a single thread of execution.
@@ -114,11 +125,27 @@ public:
     void Print()
     {
         //Print information of this thread.
-        //original
+        //Original
         //printf("%s, ", name);
         //Add by Ju Yingnan
         //2013-3-19
-        
+        printf("%2d\t%2d\t%10s\t\t", tid, uid, name);
+        switch(status)
+        {
+        case JUST_CREATED :
+            printf("JUST_CREATED\t");
+            break;
+        case RUNNING :
+            printf("RUNNING\t\t");
+            break;
+        case BLOCKED :
+            printf("BLOCKED\t\t");
+            break;
+        case READY 	 :
+            printf("READY\t\t");
+            break;
+        }
+    	printf("%3d\t\t%3d\n", priority, timeSlices);
     }
 
 
@@ -134,6 +161,28 @@ public:
     {
         return uid;
     }
+    //2013-3-19
+    int getPriority()
+    {
+        return (priority);
+    }
+    
+    void setPriority(int pri)
+    {
+        priority = pri;
+    }
+    int getTimeSlice()
+    {
+        return (timeSlices);
+    }
+    void setTimeSlice(int slice)
+    {
+        timeSlices = slice;
+    }
+    void setDefaultTimeSlice()
+    {
+        timeSlices = TIMESLICE_DEFAULT;
+    }
 
 private:
     // some of the private data for this class is listed above
@@ -148,10 +197,22 @@ private:
     //2013-3-17
     int tid;// thread id
     int uid;// user id
+    //2013-3-19
+    int priority;
+    int timeSlices;
+
 
     void StackAllocate(VoidFunctionPtr func, int arg);
     // Allocate a stack for thread.
     // Used internally by Fork()
+public:
+    //Added by Ju Yingnan
+    //2013-3-19
+    void DecreasePriority()
+    {
+        priority *= PRIORITY_FADE;
+    }
+
 
 
 

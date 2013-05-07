@@ -14,7 +14,7 @@ void Scheduler_RR(int delay)
         // Do nothing
         return;
     }
-//	printf("%s:tid is %d, priority is %d,slice left is %d\n", currentThread->getName(),currentThread->getTid(),currentThread->getPriority(),currentThread->getTimeSlice());
+//	printf("%s:tid is %d, priority is %d,slice left is %d\n", currentThread->getName(),currentThread->GetTid(),currentThread->getPriority(),currentThread->getTimeSlice());
     int slicesLeft = currentThread->getTimeSlice();
     int priority = currentThread->getPriority();
     List *readyList = scheduler->GetReadyList();

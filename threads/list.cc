@@ -57,7 +57,7 @@ List::List()
 
 List::~List()
 {
-    while (Remove() != NULL)
+    while(Remove() != NULL)
         ;	 // delete all the list elements
 }
 
@@ -78,7 +78,7 @@ List::Append(void *item)
 {
     ListElement *element = new ListElement(item, 0);
 
-    if (IsEmpty())  		// list is empty
+    if(IsEmpty())  		// list is empty
     {
         first = element;
         last = element;
@@ -107,7 +107,7 @@ List::Prepend(void *item)
 {
     ListElement *element = new ListElement(item, 0);
 
-    if (IsEmpty())  		// list is empty
+    if(IsEmpty())  		// list is empty
     {
         first = element;
         last = element;
@@ -146,7 +146,7 @@ List::Remove()
 void
 List::Mapcar(VoidFunctionPtr func)
 {
-    for (ListElement *ptr = first; ptr != NULL; ptr = ptr->next)
+    for(ListElement *ptr = first; ptr != NULL; ptr = ptr->next)
     {
         DEBUG('l', "In mapcar, about to invoke %x(%x)\n", func, ptr->item);
         (*func)((int)ptr->item);
@@ -161,7 +161,7 @@ List::Mapcar(VoidFunctionPtr func)
 bool
 List::IsEmpty()
 {
-    if (first == NULL)
+    if(first == NULL)
         return TRUE;
     else
         return FALSE;
@@ -188,12 +188,12 @@ List::SortedInsert(void *item, int sortKey)
     ListElement *element = new ListElement(item, sortKey);
     ListElement *ptr;		// keep track
 
-    if (IsEmpty())  	// if list is empty, put
+    if(IsEmpty())  	// if list is empty, put
     {
         first = element;
         last = element;
     }
-    else if (sortKey < first->key)
+    else if(sortKey < first->key)
     {
         // item goes on front of list
         element->next = first;
@@ -201,9 +201,9 @@ List::SortedInsert(void *item, int sortKey)
     }
     else  		// look for first elt in list bigger than item
     {
-        for (ptr = first; ptr->next != NULL; ptr = ptr->next)
+        for(ptr = first; ptr->next != NULL; ptr = ptr->next)
         {
-            if (sortKey < ptr->next->key)
+            if(sortKey < ptr->next->key)
             {
                 element->next = ptr->next;
                 ptr->next = element;
@@ -234,11 +234,11 @@ List::SortedRemove(int *keyPtr)
     ListElement *element = first;
     void *thing;
 
-    if (IsEmpty())
+    if(IsEmpty())
         return NULL;
 
     thing = first->item;
-    if (first == last)  	// list had one item, now has none
+    if(first == last)  	// list had one item, now has none
     {
         first = NULL;
         last = NULL;
@@ -247,7 +247,7 @@ List::SortedRemove(int *keyPtr)
     {
         first = element->next;
     }
-    if (keyPtr != NULL)
+    if(keyPtr != NULL)
         *keyPtr = element->key;
     delete element;
     return thing;
@@ -265,14 +265,14 @@ bool List::RemoveItem(void* item)
     ListElement *element = first;
     void *thing;
 
-    if (IsEmpty())
+    if(IsEmpty())
     {
 //	    	printf("allThreadList is empty!\n");
         return false;
     }
 
     thing = first->item;
-    if (first == last)  	// list had one item, now has none
+    if(first == last)  	// list had one item, now has none
     {
         if(first->item == item)
         {
@@ -288,7 +288,7 @@ bool List::RemoveItem(void* item)
             return false;
         }
     }
-    else if (first->item == item)    //the first item is to be delete
+    else if(first->item == item)     //the first item is to be delete
     {
         first = element->next;
 //	    	printf("More than 1 item, the first is to be removed \n");
@@ -302,7 +302,7 @@ bool List::RemoveItem(void* item)
         {
             if(p->next->item == item)  //next is to be removed
             {
-//	    			printf("Item is %d",((Thread *)item)->getTid());
+//	    			printf("Item is %d",((Thread *)item)->GetTid());
                 if(p->next == last)  //next is the last
                 {
                     last = p;
@@ -326,4 +326,50 @@ bool List::RemoveItem(void* item)
     }
 //	    printf("More than 1 item, but no item to remove\n");
     return false;
+}
+
+void*
+List::RemoveBySortedKey(int sortedKey)
+{
+    ListElement* target = NULL;
+    ListElement* cursor = NULL;
+    void* thing = NULL;
+
+    if(IsEmpty())
+    {
+        return NULL;
+    }
+
+    for(ListElement *ptr = first; ptr != NULL; ptr = ptr->next)
+    {
+        if(ptr->key == sortedKey)
+        {
+            target = ptr;
+            thing = ptr->item;
+            break;
+        }
+        cursor = ptr;
+    }
+
+    if(target)
+    {
+        if(target == first)
+        {
+            if(first == last)
+            {
+                first = NULL;
+                last = NULL;
+            }
+            else
+            {
+                first = target->next;
+            }
+        }
+        else
+        {
+            cursor->next = target->next;
+        }
+    }
+
+    return thing;
 }

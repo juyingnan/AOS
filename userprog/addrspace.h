@@ -15,12 +15,13 @@
 
 #include "copyright.h"
 #include "filesys.h"
+#include "translate.h"
 
 #define UserStackSize		1024 	// increase this as necessary!
 
 class AddrSpace {
   public:
-    AddrSpace(OpenFile *executable);	// Create an address space,
+    AddrSpace(int threadId, OpenFile *executable);	// Create an address space,
 					// initializing it with the program
 					// stored in the file "executable"
     ~AddrSpace();			// De-allocate an address space
@@ -31,11 +32,22 @@ class AddrSpace {
     void SaveState();			// Save/restore address space-specific
     void RestoreState();		// info on a context switch 
 
+	OpenFile *getExeFileId() { return (exeFileId); }
+	int getMainThreadId() { return (mainThreadId); }
+	unsigned int getRefCount() { return (refCount); }
+	unsigned int getNumPages() { return (numPages); }
+	TranslationEntry* getPageTable() { return (pageTable); }
+
+	void incRefCount() { (refCount++); }
+	void decRefCount();
+
   private:
     TranslationEntry *pageTable;	// Assume linear page table translation
-					// for now!
-    unsigned int numPages;		// Number of pages in the virtual 
-					// address space
+									// for now!
+	int mainThreadId;				// The thread ID which hold address space.
+	unsigned int numPages;			// Number of pages in address space.
+    unsigned int refCount;			// Reference counts of address space.
+	OpenFile *exeFileId;			// Executable file identifier
 };
 
 #endif // ADDRSPACE_H

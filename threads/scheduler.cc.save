@@ -58,7 +58,7 @@ Scheduler::~Scheduler()
 //----------------------------------------------------------------------
 
 void
-Scheduler::ReadyToRun (Thread *thread)
+Scheduler:: (Thread *thread)
 {
     DEBUG('t', "Putting thread %s on ready list.\n", thread->getName());
 
@@ -72,10 +72,8 @@ Scheduler::ReadyToRun (Thread *thread)
     readyList->SortedInsert(thread, thread->getPriority());
     if(currentThread->getPriority() > thread->getPriority())
     {
-        currentThread->Yield();
+        currentThread->setTimeSlice(0);
     }
-//#elif SCHED_FIFO//FCFS
-//    readyList->Append((void *)thread);
 #else //no scheduler defined
     readyList->Append((void *)thread);
 #endif
@@ -92,17 +90,7 @@ Scheduler::ReadyToRun (Thread *thread)
 Thread *
 Scheduler::FindNextToRun ()
 {
-    //original
-    //return (Thread *)readyList->Remove();
-#ifdef SCHED_PRIORITY//using priority-based interruptible scheduler
-    int priorityOfJustRun = 255;//WTF
-    return (Thread *)readyList->SortedRemove(&priorityOfJustRun);
-//#elif SCHED_FIFO//FCFS
-//    return (Thread *)readyList->Remove();
-#else //no scheduler defined
     return (Thread *)readyList->Remove();
-#endif
-
 }
 
 //----------------------------------------------------------------------
@@ -221,12 +209,8 @@ void Scheduler::AdjustAllPriority()
 //----------------------------------------------------------------------
 void Scheduler_RR(int delay)
 {
-    IntStatus oldLevel = interrupt->SetLevel(IntOff);	// disable interrupts
-
     if(interrupt->getStatus() == IdleMode)
     {
-            (void) interrupt->SetLevel(oldLevel);	// re-enable interrupts
-
         // Do nothing
         return;
     }
@@ -235,16 +219,15 @@ void Scheduler_RR(int delay)
     int priority = currentThread->getPriority();
     List *readyList = scheduler->GetReadyList();
 
-    if(slicesLeft)
+
+    if(slicesLeft>0)
     {
         slicesLeft--;
         currentThread->setTimeSlice(slicesLeft);
-            (void) interrupt->SetLevel(oldLevel);	// re-enable interrupts
-
         return;
     }
 
-    //next time time slice
+    //next time timeslice assignment
     currentThread->setDefaultTimeSlice();
 
     currentThread->setPriority(++priority);
