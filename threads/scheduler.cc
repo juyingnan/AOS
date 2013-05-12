@@ -73,6 +73,7 @@ Scheduler::ReadyToRun (Thread *thread)
     if(currentThread->getPriority() > thread->getPriority())
     {
         currentThread->setTimeSlice(0);
+        currentThread->Yield();
     }
 #else //no scheduler defined
     readyList->Append((void *)thread);

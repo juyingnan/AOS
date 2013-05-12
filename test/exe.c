@@ -2,7 +2,7 @@
 
 int main()
 {
-    //Exec("create");
+    Exec("create");
     Yield();
     Halt();
 }

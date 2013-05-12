@@ -187,3 +187,24 @@ void AddrSpace::RestoreState()
     machine->pageTable = pageTable;
     machine->pageTableSize = numPages;
 }
+
+int AddrSpace::getThreadStackTop(int threadId)
+{
+    int i;
+    int stackTop = -1;
+
+    for (i = 0; i < UserThreadMax; i++)
+    {
+        if (stackSpace[i] == threadId)
+        {
+            break;
+        }
+    }
+
+    if (i < UserThreadMax)
+    {
+        stackTop = (numPages * PageSize) - (i * UserThreadStackSize) - 16;
+    }
+
+    return stackTop;
+}

@@ -24,6 +24,7 @@
 #include "copyright.h"
 #include "system.h"
 #include "syscall.h"
+#include "string.h"
 
 //----------------------------------------------------------------------
 // ExceptionHandler
@@ -63,6 +64,8 @@ static void SysCallExitHandler();
 static void SysCallJoinHandler();
 static void SysCallForkHandler();
 static void SysCallYieldHandler();
+
+static void ThreadFuncForUserProg(int arg);
 
 static void ExceptionPageFaultHanlder();
 
@@ -387,6 +390,35 @@ FORK
 ******************************/
 static void SysCallForkHandler()
 {
+    printf("%s\n", currentThread->getName());
+    if(strcmp(currentThread->getName(), "main") == 0)
+    {
+        Thread *child = new Thread("child");
+        char *filename = currentThread->space->getfilename();
+        printf("--------------------%s\n", filename);
+        OpenFile *childfile = fileSystem->Open(filename);
+        AddrSpace *childSpace = new AddrSpace(childfile);
+        child->space = childSpace;
+
+        int userFunc = machine->ReadRegister(4);
+        // Copy machine registers of current thread to new thread
+        child->SaveUserState();
+        child->SetUserRegister(PCReg, userFunc);
+        child->SetUserRegister(NextPCReg, userFunc + 4);
+        // Every thread has its own private stack space
+        child->SetUserRegister(StackReg, child->space->getThreadStackTop(child->GetTid()));
+
+        child->Fork(ThreadFuncForUserProg, 1);
+
+        printf("%d------------------\n", machine->ReadRegister(2));
+        machine->WriteRegister(2, 1);
+    }
+    else
+    {
+        machine->WriteRegister(2, 0);
+    }
+
+    machine->PCForward();
 }
 
 /******************************
@@ -396,6 +428,30 @@ static void SysCallYieldHandler()
 {
     currentThread->Yield();
     machine->PCForward();
+}
+
+static void ThreadFuncForUserProg(int arg)
+{
+    switch(arg)
+    {
+        case 0: // Fork
+            // Fork just restore registers.
+            currentThread->RestoreUserState();
+            printf("IAMIN\n");
+            break;
+        case 1: // Exec
+            if(currentThread->space != NULL)
+            {
+                // Exec should initialize registers and restore address space.
+                currentThread->space->InitRegisters();
+                currentThread->space->RestoreState();
+            }
+            break;
+        default:
+            break;
+    }
+
+    machine->Run();
 }
 
 static void ExceptionPageFaultHanlder()

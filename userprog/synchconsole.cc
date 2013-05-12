@@ -1,7 +1,7 @@
 /*
  * synchconsole.cc
  *
- *  Created on: 2012-11-18
+ *  Created on: 2013-4-18
  *      Author: rye
  */
 // console.cc

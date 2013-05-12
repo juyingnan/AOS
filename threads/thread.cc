@@ -72,7 +72,7 @@ Thread::~Thread()
     DEBUG('t', "Deleting thread \"%s\"\n", name);
 
     ASSERT(this != currentThread);
-    if (stack != NULL)
+    if(stack != NULL)
         DeallocBoundedArray((char *) stack, StackSize * sizeof(int));
 }
 
@@ -137,7 +137,7 @@ Thread::Fork(VoidFunctionPtr func, int arg)
 void
 Thread::CheckOverflow()
 {
-    if (stack != NULL)
+    if(stack != NULL)
 #ifdef HOST_SNAKE			// Stacks grow upward on the Snakes
         ASSERT(stack[StackSize - 1] == STACK_FENCEPOST);
 #else
@@ -162,7 +162,7 @@ Thread::CheckOverflow()
 
 //
 void
-Thread::Finish ()
+Thread::Finish()
 {
     (void) interrupt->SetLevel(IntOff);
     ASSERT(this == currentThread);
@@ -206,7 +206,7 @@ Thread::Yield()
     DEBUG('t', "Yielding thread \"%s\"\n", getName());
 
     nextThread = scheduler->FindNextToRun();
-    if (nextThread != NULL)
+    if(nextThread != NULL)
     {
         scheduler->ReadyToRun(this);
         scheduler->Run(nextThread);
@@ -234,7 +234,7 @@ Thread::Yield()
 //	off the ready list, and switching to it.
 //----------------------------------------------------------------------
 void
-Thread::Sleep ()
+Thread::Sleep()
 {
     Thread *nextThread;
 
@@ -244,7 +244,7 @@ Thread::Sleep ()
     DEBUG('t', "Sleeping thread \"%s\"\n", getName());
 
     status = BLOCKED;
-    while ((nextThread = scheduler->FindNextToRun()) == NULL)
+    while((nextThread = scheduler->FindNextToRun()) == NULL)
         interrupt->Idle();	// no one to run, wait for an interrupt
 
     scheduler->Run(nextThread); // returns when we've been signalled
@@ -293,7 +293,7 @@ void DecreasePriority(int arg)
 //----------------------------------------------------------------------
 
 void
-Thread::StackAllocate (VoidFunctionPtr func, int arg)
+Thread::StackAllocate(VoidFunctionPtr func, int arg)
 {
     stack = (int *) AllocBoundedArray(StackSize * sizeof(int));
 
@@ -357,7 +357,16 @@ Thread::SaveUserState()
 void
 Thread::RestoreUserState()
 {
-    for (int i = 0; i < NumTotalRegs; i++)
+    for(int i = 0; i < NumTotalRegs; i++)
         machine->WriteRegister(i, userRegisters[i]);
+}
+
+void
+Thread::SetUserRegister(int id, int value)
+{
+    if(id >= 0 && id < NumTotalRegs)
+    {
+        userRegisters[id] = value;
+    }
 }
 #endif
