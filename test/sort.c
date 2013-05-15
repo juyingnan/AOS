@@ -16,6 +16,10 @@ main()
 {
     int i, j, tmp;
 
+	Print("Enter Sort", sizeof("Enter Sort"));
+    Exit(2);
+   // Yield();
+
     /* first initialize the array, in reverse sorted order */
     for (i = 0; i < 1024; i++)		
         A[i] = 1024 - i;

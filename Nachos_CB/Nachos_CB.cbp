@@ -77,9 +77,6 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="../DISK">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="../Makefile">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
@@ -104,9 +101,6 @@
 		</Unit>
 		<Unit filename="../bin/coff2noff.c">
 			<Option compilerVar="CC" />
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../bin/coff2noff.o">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../bin/d.c">
@@ -155,28 +149,10 @@
 		<Unit filename="../filesys/Makefile">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../filesys/addrspace.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/bitmap.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/console.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="../filesys/directory.cc">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../filesys/directory.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/directory.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/disk.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/exception.o">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../filesys/filehdr.cc">
@@ -185,87 +161,30 @@
 		<Unit filename="../filesys/filehdr.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../filesys/filehdr.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="../filesys/filesys.cc">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../filesys/filesys.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../filesys/filesys.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="../filesys/fstest.cc">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/fstest.o">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../filesys/inode.cc" />
 		<Unit filename="../filesys/inode.h" />
-		<Unit filename="../filesys/interrupt.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/list.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/machine.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/main.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/mipssim.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/nachos">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="../filesys/openfile.cc">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../filesys/openfile.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../filesys/openfile.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/progtest.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/scheduler.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/stats.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/switch.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="../filesys/swtch.s">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/synch.o">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../filesys/synchdisk.cc">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../filesys/synchdisk.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/synchdisk.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/synchlist.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/sysdep.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/system.o">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../filesys/test/big">
@@ -275,21 +194,6 @@
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../filesys/test/small">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/thread.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/threadtest.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/timer.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/translate.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../filesys/utility.o">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../machine/console.cc">
@@ -358,61 +262,7 @@
 		<Unit filename="../network/README">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../network/addrspace.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/bitmap.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/console.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/directory.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/disk.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/exception.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/filehdr.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/filesys.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/fstest.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/interrupt.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/list.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/machine.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/main.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/mipssim.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/nachos">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="../network/nettest.cc">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/nettest.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/network.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/openfile.o">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../network/post.cc">
@@ -421,52 +271,7 @@
 		<Unit filename="../network/post.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../network/post.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/progtest.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/scheduler.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/stats.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/switch.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="../network/swtch.s">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/synch.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/synchdisk.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/synchlist.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/sysdep.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/system.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/thread.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/threadtest.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/timer.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/translate.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../network/utility.o">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../test/Makefile">
@@ -491,9 +296,6 @@
 		<Unit filename="../test/halt.coff">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../test/halt.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="../test/matmult">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
@@ -502,9 +304,6 @@
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../test/matmult.coff">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../test/matmult.o">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../test/script">
@@ -520,9 +319,6 @@
 		<Unit filename="../test/shell.coff">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../test/shell.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="../test/sort">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
@@ -533,14 +329,8 @@
 		<Unit filename="../test/sort.coff">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../test/sort.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="../test/start.c">
 			<Option compilerVar="CC" />
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../test/start.o">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../test/start.s">
@@ -558,39 +348,19 @@
 		<Unit filename="../threads/copyright.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../threads/interrupt.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="../threads/list.cc">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../threads/list.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../threads/list.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="../threads/main.cc">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../threads/main.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../threads/nachos">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../threads/scheduler.cc">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../threads/scheduler.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../threads/scheduler.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../threads/scheduleralogrithms.cc" />
-		<Unit filename="../threads/scheduleralogrithms.h" />
-		<Unit filename="../threads/stats.o">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../threads/stdarg.h">
@@ -604,9 +374,6 @@
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../threads/switch.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../threads/switch.o">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../threads/switch.s">
@@ -624,19 +391,10 @@
 		<Unit filename="../threads/synch.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../threads/synch.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="../threads/synchlist.cc">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../threads/synchlist.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../threads/synchlist.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../threads/sysdep.o">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../threads/system.cc">
@@ -645,38 +403,21 @@
 		<Unit filename="../threads/system.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../threads/system.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="../threads/thread.cc">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../threads/thread.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../threads/thread.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="../threads/threadmanager.cc" />
+		<Unit filename="../threads/threadmanager.h" />
 		<Unit filename="../threads/threadtest.cc">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../threads/threadtest.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../threads/tid.cc" />
-		<Unit filename="../threads/tid.h" />
-		<Unit filename="../threads/timer.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../threads/ts.cc" />
-		<Unit filename="../threads/ts.h" />
 		<Unit filename="../threads/utility.cc">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../threads/utility.h">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../threads/utility.o">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../userprog/Makefile">
@@ -688,98 +429,38 @@
 		<Unit filename="../userprog/addrspace.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../userprog/addrspace.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="../userprog/bitmap.cc">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../userprog/bitmap.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../userprog/bitmap.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../userprog/console.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="../userprog/exception.cc">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../userprog/exception.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../userprog/interrupt.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../userprog/list.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../userprog/machine.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../userprog/main.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../userprog/mipssim.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../userprog/nachos">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../userprog/progtest.cc">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../userprog/progtest.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../userprog/scheduler.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../userprog/stats.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../userprog/switch.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="../userprog/swtch.s">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../userprog/synch.o">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
 		<Unit filename="../userprog/synchconsole.cc" />
 		<Unit filename="../userprog/synchconsole.h" />
-		<Unit filename="../userprog/synchlist.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
 		<Unit filename="../userprog/syscall.h">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>
-		<Unit filename="../userprog/sysdep.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../userprog/system.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../userprog/thread.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../userprog/threadtest.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../userprog/timer.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../userprog/translate.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../userprog/utility.o">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
-		<Unit filename="../vm/Makefile">
-			<Option target="&lt;{~None~}&gt;" />
-		</Unit>
+		<Unit filename="../vm/Makefile" />
+		<Unit filename="../vm/MemoryManager.cc" />
+		<Unit filename="../vm/MemoryManager.h" />
+		<Unit filename="../vm/PhyMemManager.cc" />
+		<Unit filename="../vm/PhyMemManager.h" />
+		<Unit filename="../vm/SwappingLRU.cc" />
+		<Unit filename="../vm/SwappingLRU.h" />
+		<Unit filename="../vm/SwappingManager.cc" />
+		<Unit filename="../vm/SwappingManager.h" />
+		<Unit filename="../vm/SwappingStrategy.h" />
+		<Unit filename="../vm/VirtMemManager.cc" />
+		<Unit filename="../vm/VirtMemManager.h" />
 		<Unit filename="../vm/addrspace.o">
 			<Option target="&lt;{~None~}&gt;" />
 		</Unit>

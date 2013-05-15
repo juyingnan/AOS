@@ -6,14 +6,14 @@
 #
 #    Nachos assumes that the location of the program startup routine (the
 # 	location the kernel jumps to when the program initially starts up)
-#       is at location 0.  This means: start.o must be the first .o passed
+#       is at location 0.  This means: start.o must be the first .o passed 
 # 	to ld, in order for the routine "Start" to be loaded at location 0
 #
 
 # if you are cross-compiling, you need to point to the right executables
 # and change the flags to ld and the build procedure for as
 
-GCCDIR = ../../../gnu-decstation-ultrix/decstation-ultrix/2.95.3/
+GCCDIR = ../../gnu-decstation-ultrix/decstation-ultrix/2.95.3/
 
 LDFLAGS = -T script -N
 ASFLAGS = -mips2
@@ -27,7 +27,7 @@ CPPFLAGS = $(INCDIR)
 
 PATH = $(GCCDIR):/lib:/usr/bin:/bin
 
-CC = $(GCCDIR)gcc -B../../../gnu-decstation-ultrix/
+CC = $(GCCDIR)gcc -B../../gnu-decstation-ultrix/
 AS = $(GCCDIR)as
 LD = $(GCCDIR)ld
 
@@ -35,7 +35,7 @@ CPP = gcc -E
 INCDIR =-I../userprog -I../threads
 CFLAGS = -G 0 -c $(INCDIR)
 
-all: halt shell matmult sort create write exec fork
+all: halt shell matmult sort
 
 start.o: start.s ../userprog/syscall.h
 	$(CPP) $(CPPFLAGS) start.c > strt.s
@@ -65,27 +65,3 @@ matmult.o: matmult.c
 matmult: matmult.o start.o
 	$(LD) $(LDFLAGS) start.o matmult.o -o matmult.coff
 	../bin/coff2noff matmult.coff matmult
-
-create.o: create.c
-	$(CC) $(CFLAGS) -c create.c
-create: create.o start.o
-	$(LD) $(LDFLAGS) start.o create.o -o create.coff
-	../bin/coff2noff create.coff create
-
-write.o: write.c
-	$(CC) $(CFLAGS) -c write.c
-write: write.o start.o
-	$(LD) $(LDFLAGS) start.o write.o -o write.coff
-	../bin/coff2noff write.coff write
-
-exec.o: exe.c
-	$(CC) $(CFLAGS) -c exe.c
-exec: exe.o start.o
-	$(LD) $(LDFLAGS) start.o exe.o -o exe.coff
-	../bin/coff2noff exe.coff exe
-
-fork.o: fork.c
-	$(CC) $(CFLAGS) -c fork.c
-fork: fork.o start.o
-	$(LD) $(LDFLAGS) start.o fork.o -o fork.coff
-	../bin/coff2noff fork.coff fork

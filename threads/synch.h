@@ -33,29 +33,18 @@
 // only thing you would know is what the value used to be.  You don't
 // know what the value is now, because by the time you get the value
 // into a register, a context switch might have occurred,
-// and some other thread might have called P or V, so the true value might
-// now be different.
 
-class Semaphore
-{
-public:
+class Semaphore {
+  public:
     Semaphore(char* debugName, int initialValue);	// set initial value
     ~Semaphore();   					// de-allocate semaphore
-    char* getName()
-    {
-        return name;    // debugging assist
-    }
+    char* getName() { return name;}			// debugging assist
+    int GetValue() {return value;}
 
     void P();	 // these are the only operations on a semaphore
     void V();	 // they are both *atomic*
-    //Added by Ju Yingnan
-    //2013-3-23
-    int GetValue()
-    {
-        return value;
-    }
 
-private:
+  private:
     char* name;        // useful for debugging
     int value;         // semaphore value, always >= 0
     List *queue;       // threads waiting in P() for the value to be > 0
@@ -73,36 +62,25 @@ private:
 // may release it.  As with semaphores, you can't read the lock value
 // (because the value might change immediately after you read it).
 
-class Lock
-{
-public:
+class Lock {
+  public:
     Lock(char* debugName);  		// initialize lock to be FREE
     ~Lock();				// deallocate lock
-    char* getName()
-    {
-        return name;    // debugging assist
-    }
+    char* getName() { return name; }	// debugging assist
 
     void Acquire(); // these are the only operations on a lock
     void Release(); // they are both *atomic*
 
     bool isHeldByCurrentThread();	// true if the current thread
-    // holds this lock.  Useful for
-    // checking in Release, and in
-    // Condition variable ops below.
+					// holds this lock.  Useful for
+					// checking in Release, and in
+					// Condition variable ops below.
 
-private:
+  private:
     char* name;				// for debugging
+	Semaphore* semaphore;	// lock's implement by semaphore
+	Thread* lockHolder;		// thread whick hold the lock
     // plus some other stuff you'll need to define
-    //Added by Ju Yingnan
-    //2013-3-21
-    //bool locked;
-    //int threadID;
-    //List* queue;
-    //Added by Ju Yingnan
-    //2013-3-23
-    Semaphore* semaphore;
-    Thread* lockHolder;
 };
 
 // The following class defines a "condition variable".  A condition
@@ -137,60 +115,24 @@ private:
 // can acquire the lock, and change data structures, before the woken
 // thread gets a chance to run.
 
-class Condition
-{
-public:
+class Condition {
+  public:
     Condition(char* debugName);		// initialize condition to
-    // "no one waiting"
+									// "no one waiting"
     ~Condition();			// deallocate the condition
-    char* getName()
-    {
-        return (name);
-    }
+    char* getName() { return (name); }
 
     void Wait(Lock *conditionLock); 	// these are the 3 operations on
-    // condition variables; releasing the
-    // lock and going to sleep are
-    // *atomic* in Wait()
+										// condition variables; releasing the
+										// lock and going to sleep are
+										// *atomic* in Wait()
     void Signal(Lock *conditionLock);   // conditionLock must be held by
     void Broadcast(Lock *conditionLock);// the currentThread for all of
-    // these operations
-    void QueuePrint();
+										// these operations
 
-private:
+  private:
     char* name;
+	List* waitingList;
     // plus some other stuff you'll need to define
-    //Added by Ju Yingnan
-    //2013-3-21
-    List* queue;
-};
-
-//Added by Ju Yingnan
-//2013-3-23
-//
-//Barrier
-//Challenge 1
-//
-class Barrier
-{
-public:
-    Barrier(char* debugName, int size);
-
-    ~Barrier();
-    char* getName()
-    {
-        return name;
-    }
-
-    void Wait();
-    void Print();
-
-private:
-    char *name;
-    int barrierSize;
-    int finished;
-    Condition *cv;
-    Lock *lock;
-
 };
 #endif // SYNCH_H

@@ -13,6 +13,7 @@
 
 Thread *currentThread;			// the thread we are running now
 Thread *threadToBeDestroyed;  		// the thread that just finished
+ThreadManager *threadManager;	// the manager of all threads
 Scheduler *scheduler;			// the ready list
 Interrupt *interrupt;			// interrupt status
 Statistics *stats;			// performance metrics
@@ -29,6 +30,10 @@ SynchDisk   *synchDisk;
 
 #ifdef USER_PROGRAM	// requires either FILESYS or FILESYS_STUB
 Machine *machine;	// user program memory and registers
+#endif
+
+#ifdef VM
+MemoryManager* memoryManager;
 #endif
 
 #ifdef NETWORK
@@ -136,12 +141,13 @@ Initialize(int argc, char **argv)
     if (randomYield)				// start the timer (if needed)
 	timer = new Timer(TimerInterruptHandler, 0, randomYield);
 
+	threadManager = new ThreadManager();	// initilize list of all threads
     threadToBeDestroyed = NULL;
 
     // We didn't explicitly allocate the current thread we are running in.
     // But if it ever tries to give up the CPU, we better have a Thread
     // object to save its state. 
-    currentThread = new Thread("main");		
+    currentThread = threadManager->createThread("main");		
     currentThread->setStatus(RUNNING);
 
     interrupt->Enable();
@@ -159,6 +165,10 @@ Initialize(int argc, char **argv)
     fileSystem = new FileSystem(format);
 #endif
 
+#ifdef VM
+	memoryManager= new MemoryManager();
+#endif
+
 #ifdef NETWORK
     postOffice = new PostOffice(netname, rely, 10);
 #endif
@@ -174,6 +184,10 @@ Cleanup()
     printf("\nCleaning up...\n");
 #ifdef NETWORK
     delete postOffice;
+#endif
+
+#ifdef VM
+	delete memoryManager;
 #endif
     
 #ifdef USER_PROGRAM

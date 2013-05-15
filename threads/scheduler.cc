@@ -1,4 +1,4 @@
-// scheduler.cc
+// scheduler.cc 
 //	Routines to choose the next thread to run, and to dispatch to
 //	that thread.
 //
@@ -7,21 +7,20 @@
 //	(since we are on a uniprocessor).
 //
 // 	NOTE: We can't use Locks to provide mutual exclusion here, since
-// 	if we needed to wait for a lock, and the lock was busy, we would
-//	end up calling FindNextToRun(), and that would put us in an
+// 	if we needed to wait for a lock, and the lock was busy, we would 
+//	end up calling FindNextToRun(), and that would put us in an 
 //	infinite loop.
 //
 // 	Very simple implementation -- no priorities, straight FIFO.
 //	Might need to be improved in later assignments.
 //
 // Copyright (c) 1992-1993 The Regents of the University of California.
-// All rights reserved.  See copyright.h for copyright notice and limitation
+// All rights reserved.  See copyright.h for copyright notice and limitation 
 // of liability and disclaimer of warranty provisions.
 
 #include "copyright.h"
 #include "scheduler.h"
 #include "system.h"
-#include "timer.h"  //Ju Yingnan 3-19
 
 //----------------------------------------------------------------------
 // Scheduler::Scheduler
@@ -29,14 +28,9 @@
 //----------------------------------------------------------------------
 
 Scheduler::Scheduler()
-{
-    readyList = new List;
-    allThreadList=new List;
-#ifdef SCHED_PRIORITY
-    timerInter=new Timer(Scheduler_RR, TIME_DELAY, false);
-#endif
-
-}
+{ 
+    readyList = new List; 
+} 
 
 //----------------------------------------------------------------------
 // Scheduler::~Scheduler
@@ -44,10 +38,9 @@ Scheduler::Scheduler()
 //----------------------------------------------------------------------
 
 Scheduler::~Scheduler()
-{
-    delete readyList;
-    delete allThreadList;
-}
+{ 
+    delete readyList; 
+} 
 
 //----------------------------------------------------------------------
 // Scheduler::ReadyToRun
@@ -63,21 +56,7 @@ Scheduler::ReadyToRun (Thread *thread)
     DEBUG('t', "Putting thread %s on ready list.\n", thread->getName());
 
     thread->setStatus(READY);
-    //original
-    //readyList->Append((void *)thread);
-
-    //Added by Ju Yingnan
-    //2013-3-19
-#ifdef SCHED_PRIORITY//using priority-based interruptible scheduler
-    readyList->SortedInsert(thread, thread->getPriority());
-    if(currentThread->getPriority() > thread->getPriority())
-    {
-        currentThread->setTimeSlice(0);
-        currentThread->Yield();
-    }
-#else //no scheduler defined
-    readyList->Append((void *)thread);
-#endif
+    readyList->SortedInsert((void *)thread, thread->getPriority());
 }
 
 //----------------------------------------------------------------------
@@ -113,24 +92,23 @@ Scheduler::Run (Thread *nextThread)
 {
     Thread *oldThread = currentThread;
 
-#ifdef USER_PROGRAM			// ignore until running user programs
-    if (currentThread->space != NULL)  	// if this thread is a user program,
-    {
+#ifdef USER_PROGRAM			// ignore until running user programs 
+    if (currentThread->space != NULL) // if this thread is a user program,
+    {	
         currentThread->SaveUserState(); // save the user's CPU registers
         currentThread->space->SaveState();
     }
 #endif
-
-    oldThread->CheckOverflow();		    // check if the old thread
-    // had an undetected stack overflow
+    // check if the old thread had an undetected stack overflow
+    oldThread->CheckOverflow();    
 
     currentThread = nextThread;		    // switch to the next thread
     currentThread->setStatus(RUNNING);      // nextThread is now running
 
     DEBUG('t', "Switching from thread \"%s\" to thread \"%s\"\n",
-          oldThread->getName(), nextThread->getName());
+            oldThread->getName(), nextThread->getName());
 
-    // This is a machine-dependent assembly language routine defined
+    // This is a machine-dependent assembly language routine defined 
     // in switch.s.  You may have to think
     // a bit to figure out what happens after this, both from the point
     // of view of the thread and from the perspective of the "outside world".
@@ -143,18 +121,16 @@ Scheduler::Run (Thread *nextThread)
     // we need to delete its carcass.  Note we cannot delete the thread
     // before now (for example, in Thread::Finish()), because up to this
     // point, we were still running on the old thread's stack!
+    // Using this method when thread has no parent.
     if (threadToBeDestroyed != NULL)
     {
-        //Added by Ju Yingnan
-        //2013-3-19
-        scheduler->RemoveFromThreadList(threadToBeDestroyed);
-        delete threadToBeDestroyed;
+        threadManager->deleteThread(threadToBeDestroyed);
         threadToBeDestroyed = NULL;
     }
 
 #ifdef USER_PROGRAM
-    if (currentThread->space != NULL)  		// if there is an address space
-    {
+    if (currentThread->space != NULL) // if there is an address space
+    {		
         currentThread->RestoreUserState();     // to restore, do it.
         currentThread->space->RestoreState();
     }
@@ -169,91 +145,6 @@ Scheduler::Run (Thread *nextThread)
 void
 Scheduler::Print()
 {
-    //printf("Ready list contents:\n");
-    //readyList->Mapcar((VoidFunctionPtr) ThreadPrint);
-    //Added by Ju Yingnan
-    //2013-3-19
-    allThreadList->Mapcar((VoidFunctionPtr) ThreadPrint);
+    printf("Ready list contents:\n");
+    readyList->Mapcar((VoidFunctionPtr) ThreadPrint);
 }
-
-//Added by Ju Yingnan
-//2013-3-19
-//----------------------------------------------------------------------
-// Scheduler::AddToAllThreadList
-// 	 Add thread to allThreadList
-//----------------------------------------------------------------------
-void Scheduler::AddToAllThreadList(Thread* thread)
-{
-    allThreadList->Append((void *)thread);
-}
-//----------------------------------------------------------------------
-// Scheduler::RemoveFromThreadList
-// 	 Remove current thread from AllThreadList
-//----------------------------------------------------------------------
-bool Scheduler::RemoveFromThreadList(Thread *threadToBeRemoved)
-{
-    return allThreadList->RemoveItem(threadToBeRemoved);
-}
-
-//----------------------------------------------------------------------
-// Scheduler::AdjustAllPriority
-// 	 Multiply all thread priority by percent.
-//----------------------------------------------------------------------
-void Scheduler::AdjustAllPriority()
-{
-    allThreadList->Mapcar((VoidFunctionPtr)DecreasePriority);
-}
-
-//----------------------------------------------------------------------
-// Scheduler::Scheduler_RR
-// 	 scheduler adjust alogrithms
-//----------------------------------------------------------------------
-void Scheduler_RR(int delay)
-{
-    if(interrupt->getStatus() == IdleMode)
-    {
-        // Do nothing
-        return;
-    }
-
-    int slicesLeft = currentThread->getTimeSlice();
-    int priority = currentThread->getPriority();
-    List *readyList = scheduler->GetReadyList();
-
-
-    if(slicesLeft>0)
-    {
-        slicesLeft--;
-        currentThread->setTimeSlice(slicesLeft);
-        return;
-    }
-
-    //next time timeslice assignment
-    currentThread->setDefaultTimeSlice();
-
-    currentThread->setPriority(++priority);
-    if(priority >= 255)
-    {
-//		printf("Priority is out of range\n");
-        scheduler->AdjustAllPriority();
-    }
-
-    if(readyList->IsEmpty())
-    {
-        return;
-    }
-
-    if(priority < ((Thread *)readyList->Front()->item)->getPriority())
-    {
-        //Do nothing
-//		printf("Current thread has the highest priority\n");
-        return;
-    }
-    else
-    {
-//		printf("There is a thread with higher priority\n");
-        interrupt->YieldOnReturn();
-        return;
-    }
-}
-
